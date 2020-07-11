@@ -6,20 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".login.LoginActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="LangitPay Absensi"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:src="@drawable/lp_text"
         app:layout_constraintBottom_toTopOf="@+id/et_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
+        tools:ignore="ContentDescription,HardcodedText" />
 
     <EditText
         android:id="@+id/et_email"

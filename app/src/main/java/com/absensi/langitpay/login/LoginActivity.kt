@@ -17,18 +17,24 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         bt_login.setOnClickListener {
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(et_email.text.toString().trim(),et_password.text.toString().trim())
-                .addOnCompleteListener{
-                    return@addOnCompleteListener if (it.isSuccessful){
-                        startActivity(Intent(this,MainActivity::class.java))
-                    }
-                    else
-                        Toast.makeText(this, "Succesfully Login", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener{
-                    Log.d("Main", "Failed Login: ${it.message}")
-                    Toast.makeText(this, "Email/Password incorrect", Toast.LENGTH_SHORT).show()
-                }
+            setLogin()
         }
+    }
+
+    private fun setLogin(){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(et_email.text.toString().trim(),et_password.text.toString().trim())
+            .addOnCompleteListener{
+                return@addOnCompleteListener if (it.isSuccessful){
+                    startActivity(Intent(this,MainActivity::class.java))
+                } else{
+                    Log.e("Gagal Login",it.result.toString())
+                    Toast.makeText(this, "Gagal Login", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener{
+                Log.e("Main", "Failed Login: ${it.message}")
+                Toast.makeText(this, "Email/Password incorrect", Toast.LENGTH_SHORT).show()
+                it.printStackTrace()
+            }
     }
 }
