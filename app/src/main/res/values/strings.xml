@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AbsensiKaryawanLangitPay</string>
+    <string name="pref_username">pref_username</string>
+    <string name="pref_password">pref_password</string>
 </resources>

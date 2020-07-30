@@ -1,7 +1,6 @@
 package com.absensi.langitpay.network
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 
 object SharedPref {
@@ -24,8 +23,8 @@ object SharedPref {
 
     fun getPrefDeviceUniqId(): String? = sharedPrefs().getString(KEY_AUTH_DEVICE_UNIQ_ID, "")
 
-    fun getPrefhDeviceDev(): String? = sharedPrefs().getString(KEY_AUTH_DEVICE_DEV, "")
-    private val PREFS_NAME = "MR_PREFS"
+    fun getPrefDeviceDev(): String? = sharedPrefs().getString(KEY_AUTH_DEVICE_DEV, "")
+    private const val PREFS_NAME = "MR_PREFS"
 
     fun saveValue(key: String, value: String?) {
         val settings: SharedPreferences = getApplication().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

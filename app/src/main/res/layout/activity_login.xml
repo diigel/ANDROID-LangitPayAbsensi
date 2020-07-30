@@ -13,50 +13,65 @@
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:src="@drawable/lp_text"
-        app:layout_constraintBottom_toTopOf="@+id/et_email"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription,HardcodedText" />
 
-    <EditText
-        android:id="@+id/et_email"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
-        android:hint="Email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
+        app:errorEnabled="true"
+        app:errorTextColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/et_password"
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="Password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/et_email"
-        app:layout_constraintStart_toStartOf="@+id/et_email"
+        app:errorEnabled="true"
+        app:errorTextColor="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_username"
+        app:layout_constraintStart_toStartOf="@+id/text_input_username"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        tools:ignore="HardcodedText" />
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/bt_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@drawable/button_selector_primary"
         android:text="Masuk"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
-        app:layout_constraintStart_toStartOf="@+id/et_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_password"
+        app:layout_constraintStart_toStartOf="@+id/text_input_password"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password"
         tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.Guideline
