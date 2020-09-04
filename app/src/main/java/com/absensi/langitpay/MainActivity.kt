@@ -1,7 +1,10 @@
 package com.absensi.langitpay
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.absensi.langitpay.absen.ConfirmationAbsenActivity
+import com.absensi.langitpay.abstraction.clicked
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -10,9 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        img_exit.setOnClickListener {
-            finishAffinity()
+        btn_absen.clicked {
+            startActivity(Intent(this,ConfirmationAbsenActivity::class.java))
         }
-
     }
 }

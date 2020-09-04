@@ -1,62 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@android:color/white"
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/textView"
         android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="image logo langitpay"
         android:src="@drawable/lp_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_exit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_exit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="Absen"
-        android:textColor="@android:color/white"
+        android:layout_height="0dp"
+        android:contentDescription="image team work"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bg_teamwork"
+        app:layout_constraintBottom_toTopOf="@+id/rel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        <RelativeLayout
+            android:id="@+id/rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            android:background="@drawable/bg_rounded_top_shadow"
+            tools:targetApi="lollipop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/text_username"
+                android:layout_alignBottom="@+id/text_email"
+                android:layout_margin="10dp"
+                android:contentDescription="Images Human"
+                android:src="@drawable/ic_account_circle" />
+
+            <TextView
+                android:id="@+id/text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/img_account"
+                android:textColor="@color/text_color2"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Muhammad Ramdani" />
+
+            <TextView
+                android:id="@+id/text_devision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_username"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/text_color2"
+                android:textSize="15sp"
+                tools:text="IT Devision" />
+
+            <TextView
+                android:id="@+id/text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_devision"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/text_color2"
+                android:textSize="15sp"
+                tools:text="dhani.it@langitpyament.com" />
+
+            <Button
+                android:id="@+id/btn_absen"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/text_email"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/bg_rounded_primary"
+                android:text="Absen Sekarang"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

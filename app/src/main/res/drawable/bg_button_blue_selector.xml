@@ -4,9 +4,9 @@
         android:drawable="@drawable/bg_button_unactive"
         android:state_enabled="false"/>
     <item
-        android:drawable="@drawable/bg_rounded_primary"
+        android:drawable="@drawable/bg_blue_rounded"
         android:state_pressed="true"/>
     <item
-        android:drawable="@drawable/bg_rounded_primary"/>
+        android:drawable="@drawable/bg_blue_rounded"/>
 
 </selector>

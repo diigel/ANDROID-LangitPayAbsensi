@@ -2,77 +2,129 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity">
+    android:background="@drawable/bg_gradient_blue"
+    android:contentDescription="Parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,MissingDefaultResource">
 
-    <ImageView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"
-        android:src="@drawable/lp_text"
-        app:layout_constraintBottom_toTopOf="@+id/text_input_username"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:gravity="top"
+        android:text="LangitPay"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:textSize="25sp"
+        app:drawableStartCompat="@drawable/logo_white"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription,HardcodedText" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="25dp"
+        android:text="Absensi"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kerja kita prestasi bangsa!"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_username"
-        android:layout_width="match_parent"
+        android:id="@+id/usernameTextAlert"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:errorEnabled="true"
+        android:contentDescription="Text input layout pin baru"
+        android:layout_marginBottom="10dp"
         app:errorTextColor="@android:color/holo_red_dark"
+        app:hintEnabled="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/passwordTextAlert"
+        app:layout_constraintStart_toStartOf="@+id/passwordTextAlert"
+        tools:ignore="ContentDescription">
 
         <EditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_border"
+            android:gravity="start|center_vertical"
             android:hint="Username"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            tools:ignore="HardcodedText" />
+            android:imeOptions="actionNext"
+            android:inputType="textAutoComplete"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:ignore="Autofill,LabelFor" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_password"
+        android:id="@+id/passwordTextAlert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
+        android:contentDescription="Text input layout konfirmasi pin"
         app:errorTextColor="@android:color/holo_red_dark"
-        app:layout_constraintEnd_toEndOf="@+id/text_input_username"
-        app:layout_constraintStart_toStartOf="@+id/text_input_username"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/saveButton"
+        app:layout_constraintStart_toStartOf="@+id/saveButton"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@android:color/white"
+        tools:ignore="ContentDescription">
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_border"
+            android:gravity="start|center_vertical"
             android:hint="Password"
-            android:importantForAutofill="no"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
-            tools:ignore="HardcodedText" />
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:ignore="Autofill,LabelFor,TextFields" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/bt_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_selector_primary"
-        android:text="Masuk"
+        android:background="@drawable/bg_button_blue_selector"
+        android:text="masuk"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/text_input_password"
-        app:layout_constraintStart_toStartOf="@+id/text_input_password"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_password"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextAlert"
+        tools:ignore="HardcodedText,SmallSp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

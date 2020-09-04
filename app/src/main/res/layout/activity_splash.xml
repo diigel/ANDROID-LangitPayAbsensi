@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_blue"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="LangitPay Absensi"
-        android:textColor="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:drawablePadding="10dp"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        app:drawableTopCompat="@drawable/logo_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
