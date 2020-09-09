@@ -8,14 +8,13 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".absen.AbsentOfficeFragment">
-
 
             <TextView
                 android:id="@+id/text_label_username"
@@ -170,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/bg_dash"
                 android:padding="5dp"
                 android:scaleType="fitCenter"

@@ -29,3 +29,6 @@
 #-keepclassmembers class com.absensi.langitpay.model.** {
 #      *;
 #}
+
+-keep class androidx.appcompat.widget.** { *; }
+-keep class rx.** { *; }

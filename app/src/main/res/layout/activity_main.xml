@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".MainActivity"
+    tools:context=".home.HomeActivity"
     tools:ignore="HardcodedText">
 
     <ImageView
@@ -17,6 +17,48 @@
         android:src="@drawable/lp_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/btn_notification"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Parent tombol notifikasi"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText">
+
+        <ImageView
+            android:id="@+id/img_bell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_bell"
+            android:contentDescription="Gambar notifikasi" />
+
+        <TextView
+            android:id="@+id/text_notification"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/circle_blue"
+            android:contentDescription="Text notifikasi"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            tools:ignore="SmallSp"
+            tools:text="5" />
+
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

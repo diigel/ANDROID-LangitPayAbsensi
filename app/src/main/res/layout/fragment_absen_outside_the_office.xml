@@ -8,12 +8,13 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".absen.AbsentOfficeFragment">
 
             <TextView
@@ -183,14 +184,15 @@
                 android:layout_height="100dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/bg_border_gray"
-                android:gravity="end"
                 android:hint="Meeting"
+                android:gravity="top"
                 android:inputType="textMultiLine"
                 android:padding="10dp"
+                android:layout_marginTop="10dp"
                 android:textColorHint="@color/text_color2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/text_label_noted"
+                app:layout_constraintStart_toStartOf="@+id/text_label_noted"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_noted"
                 tools:ignore="Autofill" />
 
             <View

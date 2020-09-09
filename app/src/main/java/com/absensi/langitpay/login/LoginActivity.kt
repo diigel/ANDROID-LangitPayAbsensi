@@ -3,7 +3,7 @@ package com.absensi.langitpay.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.absensi.langitpay.MainActivity
+import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.clicked
 import com.absensi.langitpay.network.Network
@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         setLogin()
         saveButton.clicked {
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
         }
     }
 

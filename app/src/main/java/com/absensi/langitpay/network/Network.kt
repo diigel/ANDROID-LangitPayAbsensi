@@ -1,6 +1,8 @@
 package com.absensi.langitpay.network
 
+import android.content.Context
 import com.absensi.langitpay.BuildConfig
+import com.absensi.langitpay.R
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -11,6 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object Network {
+
+    private val context: Context = AbsensiLangitPayAplication.getApplicationContext().applicationContext
     private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
 
         /**
@@ -52,7 +56,7 @@ object Network {
             .create()
 
         val builder = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(context.resources.getString(R.string.base_url))
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(provideOkHttpClient())

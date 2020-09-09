@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.login.LoginActivity
 import com.absensi.langitpay.network.SharedPref
 
@@ -14,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             if (!SharedPref.getPrefDeviceUniqId().isNullOrEmpty()) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))

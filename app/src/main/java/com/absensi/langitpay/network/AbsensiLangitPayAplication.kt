@@ -7,11 +7,11 @@ class AbsensiLangitPayAplication : Application() {
 
     companion object {
         lateinit var instance: AbsensiLangitPayAplication
-        fun getApplicationContext() = instance.applicationContext
+        fun getApplicationContext(): Context = instance.applicationContext
     }
 
-    override fun getApplicationContext(): Context {
+    override fun onCreate() {
         instance = this
-        return super.getApplicationContext()
+        super.onCreate()
     }
 }
