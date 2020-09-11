@@ -3,12 +3,10 @@ package com.absensi.langitpay.absen.camera
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.loaderDialog
 import com.absensi.langitpay.abstraction.toast
@@ -19,8 +17,6 @@ import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.size.SizeSelector
 import com.otaliastudios.cameraview.size.SizeSelectors
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_camera.*
 import kotlinx.coroutines.GlobalScope
@@ -55,7 +51,7 @@ class CameraActivity : AppCompatActivity() {
                         val file = File.createTempFile("LangitPay", ".png")
                         result.toFile(file) {
                             Log.i("Image",file.absolutePath)
-                            launchImageCrop(Uri.fromFile(it))
+                            handlerResult(file)
                         }
                     }
                 })
@@ -69,7 +65,7 @@ class CameraActivity : AppCompatActivity() {
                 previewShow = false,
                 btnTakePicture = true
             ) {
-                camera.takePicture()
+                camera.takePictureSnapshot()
                 loader.show()
             }
         }
@@ -83,47 +79,36 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            val result = CropImage.getActivityResult(data)
-            visibility(
-                cameraShow = false,
-                linButtonShow = true,
-                previewShow = true,
-                btnTakePicture = false
-            ) {
-                Glide.with(this).load(result.uri).into(image_preview)
-                if (result != null){
-                    GlobalScope.launch {
-                        Compressor.compress(this@CameraActivity,result.uri.toFile()).apply {
-                            btn_upload.setOnClickListener {
-                                loader.show()
-                                Handler().postDelayed({
-                                    loader.dismiss()
-                                    val intent = Intent()
-                                    intent.putExtra("image", result.uri.toFile().absolutePath)
-                                    setResult(Activity.RESULT_OK, intent)
-                                    finish()
-                                },500)
-                            }
+    private fun handlerResult(result : File?){
+        visibility(
+            cameraShow = false,
+            linButtonShow = true,
+            previewShow = true,
+            btnTakePicture = false
+        ) {
+            Glide.with(this).load(result).into(image_preview)
+            if (result != null){
+                GlobalScope.launch {
+                    Compressor.compress(this@CameraActivity,result).apply {
+                        btn_upload.setOnClickListener {
+                            loader.show()
+                            Handler().postDelayed({
+                                loader.dismiss()
+                                val intent = Intent()
+                                intent.putExtra("image", result.absolutePath)
+                                setResult(Activity.RESULT_OK, intent)
+                                finish()
+                            },500)
                         }
                     }
-                }else{
-                    btn_upload.isEnabled = false
-                    btn_upload.setBackgroundResource(R.drawable.bg_button_unactive)
-                    toast("Terjadi Kesalahan Silahkan Ambil Photo Lagi")
                 }
+            }else{
+                btn_upload.isEnabled = false
+                btn_upload.setBackgroundResource(R.drawable.bg_button_unactive)
+                toast("Terjadi Kesalahan Silahkan Ambil Photo Lagi")
             }
         }
     }
-
-    private fun launchImageCrop(uri: Uri){
-        CropImage.activity(uri)
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .start(this)
-    }
-
     private fun visibility(
         cameraShow: Boolean,
         linButtonShow: Boolean,
