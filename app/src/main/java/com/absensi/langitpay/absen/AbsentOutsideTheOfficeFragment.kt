@@ -6,13 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
 import com.absensi.langitpay.absen.camera.CameraActivity
+import com.absensi.langitpay.absen.location.MarkLocation
 import com.absensi.langitpay.abstraction.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationRequest
@@ -43,7 +44,10 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
+        text_office_location.clicked {
+            startActivity(Intent(requireContext(), MarkLocation::class.java))
+        }
         img_preview.clicked {
             withPermission(Manifest.permission.CAMERA) {
                 if (it) {
@@ -65,7 +69,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                     Glide.with(this).load(imageBitmap).into(img_preview)
                     //imagePath = image
                 }
-            }else{
+            } else {
                 context?.showDialogInfo("Gagal Mengambil Image")
             }
             //validateButton()
@@ -91,7 +95,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
         composite += provider.getUpdatedLocation(request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({location ->
+            .subscribe({ location ->
                 val lat = location.latitude
                 val lon = location.longitude
                 result.invoke(lat, lon)
@@ -100,8 +104,10 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                 result.invoke(null, null)
             })
     }
+
     private fun isLocationEnabled(): Boolean {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }

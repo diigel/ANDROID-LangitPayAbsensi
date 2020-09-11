@@ -56,7 +56,7 @@ object Network {
             .create()
 
         val builder = Retrofit.Builder()
-            .baseUrl(context.resources.getString(R.string.base_url))
+            .baseUrl(context.resources.getString(R.string.maps_url))
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(provideOkHttpClient())
