@@ -14,7 +14,9 @@ import java.util.concurrent.TimeUnit
 
 object Network {
 
-    private val context: Context = AbsensiLangitPayAplication.getApplicationContext().applicationContext
+    private val context: Context =
+        AbsensiLangitPayAplication.getApplicationContext().applicationContext
+
     private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
 
         /**
@@ -42,7 +44,7 @@ object Network {
         return builder.build()
     }
 
-    private fun provideRetrofit(): Retrofit {
+    private fun provideRetrofit(maps: Boolean? = null): Retrofit {
 
         /**
          * setFieldNamingPolicy()
@@ -56,7 +58,14 @@ object Network {
             .create()
 
         val builder = Retrofit.Builder()
-            .baseUrl(context.resources.getString(R.string.maps_url))
+            .baseUrl(
+                if (maps == true) {
+                    context.resources.getString(R.string.maps_url)
+                } else {
+                    context.resources.getString(R.string.base_url)
+                }
+            )
+
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(provideOkHttpClient())
@@ -64,5 +73,5 @@ object Network {
         return builder.build()
     }
 
-    fun getRoutes(): Routes = provideRetrofit().create(Routes::class.java)
+    fun getRoutes(maps: Boolean? = null): Routes = provideRetrofit(maps).create(Routes::class.java)
 }

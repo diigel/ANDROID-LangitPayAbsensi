@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 class MarkLocationRepository(private val composite: CompositeDisposable) {
 
     fun getLocation(at: String,key : String, result: (GetLocation) -> Unit) {
-        composite += Network.getRoutes()
+        composite += Network.getRoutes(maps = true)
             .getLocation(at,key)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
