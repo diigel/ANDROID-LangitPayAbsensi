@@ -24,6 +24,7 @@ android {
         resValue "string", "maps_url", prop.getProperty("maps.url")
         resValue "string", "maps_app_id", prop.getProperty("maps.app.id")
         resValue "string", "base_url", prop.getProperty("base.url")
+        resValue "string", "maps_search_url", prop.getProperty("maps.search.url")
     }
 
     buildTypes {
@@ -68,6 +69,7 @@ dependencies {
 
     // maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
 
     // dexter permission
     implementation 'com.karumi:dexter:6.0.2'

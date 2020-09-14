@@ -1,8 +1,6 @@
 package com.absensi.langitpay.network
 
-import android.content.Context
 import com.absensi.langitpay.BuildConfig
-import com.absensi.langitpay.R
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -13,9 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object Network {
-
-    private val context: Context =
-        AbsensiLangitPayAplication.getApplicationContext().applicationContext
 
     private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
 
@@ -44,7 +39,7 @@ object Network {
         return builder.build()
     }
 
-    private fun provideRetrofit(maps: Boolean? = null): Retrofit {
+    private fun provideRetrofit(baseUrl: BaseUrl): Retrofit {
 
         /**
          * setFieldNamingPolicy()
@@ -59,10 +54,10 @@ object Network {
 
         val builder = Retrofit.Builder()
             .baseUrl(
-                if (maps == true) {
-                    context.resources.getString(R.string.maps_url)
-                } else {
-                    context.resources.getString(R.string.base_url)
+                when (baseUrl) {
+                    BaseUrl.BASE_URL -> GetBaseUrl.baseUrl
+                    BaseUrl.MAPS_URL -> GetBaseUrl.mapsUrl
+                    BaseUrl.MAPS_SEARCH_URL -> GetBaseUrl.mapsSearchUrl
                 }
             )
 
@@ -73,5 +68,5 @@ object Network {
         return builder.build()
     }
 
-    fun getRoutes(maps: Boolean? = null): Routes = provideRetrofit(maps).create(Routes::class.java)
+    fun getRoutes(baseUrl: BaseUrl): Routes = provideRetrofit(baseUrl).create(Routes::class.java)
 }

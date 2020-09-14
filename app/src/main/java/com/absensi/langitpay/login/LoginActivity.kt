@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.clicked
+import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network
 import com.absensi.langitpay.network.SharedPref
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -67,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun requestLogin(username: String, password: String) {
-        composite += Network.getRoutes().login(username, password, uniqueID)
+        composite += Network.getRoutes(BaseUrl.BASE_URL).login(username, password, uniqueID)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ login ->

@@ -20,4 +20,11 @@ interface Routes {
         @Query("at") at: String,
         @Query("apiKey") apiKey: String
     ): Observable<GetLocation>
+
+    @GET("autosuggest")
+    fun getLocationSearch(
+        @Query("at") lat: String,
+        @Query("q") placeName : String,
+        @Query("apikey") apiKey: String
+    ) : Observable<GetLocation>
 }

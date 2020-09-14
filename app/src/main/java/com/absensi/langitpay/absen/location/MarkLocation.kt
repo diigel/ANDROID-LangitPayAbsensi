@@ -15,7 +15,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_mark_location.*
 import kotlinx.android.synthetic.main.bottom_sheet_location.*
 
@@ -90,6 +93,24 @@ class MarkLocation : AppCompatActivity() {
                     }
                 }
             }
+
+            et_location.textChanges()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map { it.toString() }
+                .subscribe({
+                    val newPosition = maps.cameraPosition.target
+                    if (!it.isNullOrEmpty()){
+                        getSearchLocation(newPosition,it){item ->
+                            bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                            text_title.text = item?.title
+                            text_address.text = item?.address?.label
+                        }
+                    }
+
+                },{
+                    it.printStackTrace()
+                })
         }
     }
 
@@ -113,16 +134,42 @@ class MarkLocation : AppCompatActivity() {
                         result.invoke(it.items.first())
                     }
                 }else {
-                    progress.gone(true)
-                    bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                    text_title.text = "Maaf Terjadi Kesalahan"
-                    text_address.text = "Silahkan Coba Kembali"
-                    btn_confirmation.text = "Tutup"
-                    btn_confirmation.clicked { onBackPressed() }
+                    runOnUiThread {
+                        progress.gone(true)
+                        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                        text_title.text = "Maaf Terjadi Kesalahan"
+                        text_address.text = "Silahkan Coba Kembali"
+                        btn_confirmation.text = "Tutup"
+                        btn_confirmation.clicked { onBackPressed() }
+                    }
                 }
             }
         }
+    }
 
+    private fun getSearchLocation(latLng : LatLng,searchKey : String, result: (Item?) -> Unit){
+        val at = "${latLng.latitude},${latLng.longitude}"
+        if (!hasFetch){
+            animateMarker = false
+            progress.visible(true)
+            repository.getSearchLocation(at,searchKey,resources.getString(R.string.maps_key)){
+                if (it!=null){
+                    runOnUiThread {
+                        progress.gone(true)
+                        result.invoke(it.items.first())
+                    }
+                }else{
+                    runOnUiThread {
+                        progress.gone(true)
+                        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                        text_title.text = "Maaf Terjadi Kesalahan"
+                        text_address.text = "Silahkan Coba Kembali"
+                        btn_confirmation.text = "Tutup"
+                        btn_confirmation.clicked { onBackPressed() }
+                    }
+                }
+            }
+        }
     }
 
 }
