@@ -50,6 +50,7 @@
         tools:text="Jl. Taman buaran indah 1 blok u no 244" />
 
     <Button
+        android:id="@+id/btn_confirmation"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="50dp"

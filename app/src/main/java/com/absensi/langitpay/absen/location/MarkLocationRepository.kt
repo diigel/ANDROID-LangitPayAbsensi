@@ -10,18 +10,15 @@ import io.reactivex.schedulers.Schedulers
 
 class MarkLocationRepository(private val composite: CompositeDisposable) {
 
-    fun getLocation(at: String,key : String, result: (GetLocation) -> Unit) {
+    fun getLocation(at: String,key : String, result: (GetLocation?) -> Unit) {
         composite += Network.getRoutes(maps = true)
             .getLocation(at,key)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if (it != null) {
-                    result.invoke(it)
-                } else {
-                    logi("Gagal Get Locaton -> $it")
-                }
+                result.invoke(it)
             }, {
+                result.invoke(null)
                 it.printStackTrace()
             })
     }

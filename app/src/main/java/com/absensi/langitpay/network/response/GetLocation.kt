@@ -1,10 +1,12 @@
 package com.absensi.langitpay.network.response
 
-data class GetLocation (
-    val items: List<Item>
+data class GetLocation(
+    val items: List<Item>,
+    val errorDescription: String? = null,
+    val error : String? = null
 )
 
-data class Item (
+data class Item(
     val title: String,
     val id: String,
     val resultType: String,
@@ -15,12 +17,12 @@ data class Item (
     val categories: List<Category>
 )
 
-data class Position (
+data class Position(
     val lat: Double,
     val lng: Double
 )
 
-data class Address (
+data class Address(
     val label: String,
     val countryCode: String,
     val countryName: String,
@@ -33,7 +35,7 @@ data class Address (
     val postalCode: String
 )
 
-data class Category (
+data class Category(
     val id: String,
     val primary: Boolean
 )

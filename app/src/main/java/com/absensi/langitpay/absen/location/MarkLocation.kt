@@ -1,9 +1,12 @@
 package com.absensi.langitpay.absen.location
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
 import com.absensi.langitpay.R
+import com.absensi.langitpay.abstraction.clicked
 import com.absensi.langitpay.abstraction.gone
 import com.absensi.langitpay.abstraction.visible
 import com.absensi.langitpay.network.response.Item
@@ -16,6 +19,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_mark_location.*
 import kotlinx.android.synthetic.main.bottom_sheet_location.*
 
+@SuppressLint("SetTextI18n")
 class MarkLocation : AppCompatActivity() {
 
     private val composite = CompositeDisposable()
@@ -30,16 +34,20 @@ class MarkLocation : AppCompatActivity() {
         MarkLocationRepository(composite)
     }
 
+    private var bottomSheet = BottomSheetBehavior<View>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mark_location)
+
+        bottomSheet = BottomSheetBehavior.from(bottom_sheet)
         progress.gone(true)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
 
         setupMaps()
     }
 
     private fun setupMaps(){
-         val bottomSheet = BottomSheetBehavior.from(bottom_sheet)
         bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
         (map_view as SupportMapFragment).getMapAsync {maps ->
             maps.moveCamera(CameraUpdateFactory.newLatLngZoom(jakartaLatLng,18f))
@@ -64,7 +72,7 @@ class MarkLocation : AppCompatActivity() {
 
                     getLocation(newPosition){item ->
                         bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                        val findLocation = LatLng(item.position.lat, item.position.lng)
+                        val findLocation = LatLng(item?.position?.lat ?: 0.0, item?.position?.lng ?: 0.0)
 
                         maps.animateCamera(CameraUpdateFactory.newLatLng(findLocation),200,
                             object : GoogleMap.CancelableCallback {
@@ -77,8 +85,8 @@ class MarkLocation : AppCompatActivity() {
                                 }
                             })
 
-                        text_title.text = item.title
-                        text_address.text = item.address.label
+                        text_title.text = item?.title
+                        text_address.text = item?.address?.label
                     }
                 }
             }
@@ -92,16 +100,25 @@ class MarkLocation : AppCompatActivity() {
         }.start()
     }
 
-    private fun getLocation (latLng : LatLng,result: (Item) -> Unit){
+    private fun getLocation (latLng : LatLng, result: (Item?) -> Unit){
         val at = "${latLng.latitude},${latLng.longitude}"
 
         if (!hasFetch){
             animateMarker = false
             progress.visible(true)
             repository.getLocation(at,resources.getString(R.string.maps_key)){
-                runOnUiThread {
+                if(it != null){
+                    runOnUiThread {
+                        progress.gone(true)
+                        result.invoke(it.items.first())
+                    }
+                }else {
                     progress.gone(true)
-                    result.invoke(it.items.first())
+                    bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                    text_title.text = "Maaf Terjadi Kesalahan"
+                    text_address.text = "Silahkan Coba Kembali"
+                    btn_confirmation.text = "Tutup"
+                    btn_confirmation.clicked { onBackPressed() }
                 }
             }
         }
