@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -73,10 +74,20 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
             }
         }
         btn_absen.clicked {
-            getLocation { latitude, longitude ->
-                if (isLocationEnabled()) {
-
+            if (isLocationEnabled()) {
+                getLocation { latitude, longitude ->
+                    val locationMe = Location("").apply {
+                        this.latitude = latitude ?: 0.0
+                        this.longitude = longitude ?: 0.0
+                    }
+                    val locationOffice = Location("").apply {
+                        this.latitude = resources.getString(R.string.lat_office_it).toDouble()
+                        this.longitude = resources.getString(R.string.long_office_it).toDouble()
+                    }
+                    getLocationDistance(locationMe,locationOffice)
                 }
+            }else {
+                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             }
         }
     }
@@ -100,6 +111,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
             resultCode == AppCompatActivity.RESULT_OK && requestCode == 50 -> {
                 val dataLocation = data?.extras?.getParcelable<LatLongParcel>("result_location")
                 logi("data is $dataLocation")
+                text_office_location.text = dataLocation?.title
             }
         }
     }
@@ -139,5 +151,13 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
         val locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    private fun getLocationDistance(locationMe: Location, locationOffice: Location): Boolean {
+        val inMeters = 50
+        val distance = locationOffice.distanceTo(locationMe)
+        logi("distance is -> $distance \n inMeter is -> $inMeters")
+        logi("loc me is -> $locationMe \n loc office is -> $locationOffice")
+        return distance >= inMeters
     }
 }

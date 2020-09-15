@@ -4,13 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
 import com.absensi.langitpay.absen.camera.CameraActivity
 import com.absensi.langitpay.abstraction.*
@@ -44,7 +45,7 @@ class AbsentOfficeFragment : Fragment() {
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
         img_preview.clicked {
             withPermission(Manifest.permission.CAMERA) {
                 if (it) {
@@ -53,6 +54,24 @@ class AbsentOfficeFragment : Fragment() {
                 } else {
                     toast("permission denied")
                 }
+            }
+        }
+
+        btn_absen.clicked {
+            if (isLocationEnabled()) {
+                getLocation { latitude, longitude ->
+                    val locationMe = Location("").apply {
+                        this.latitude = latitude ?: 0.0
+                        this.longitude = longitude ?: 0.0
+                    }
+                    val locationOffice = Location("").apply {
+                        this.latitude = resources.getString(R.string.lat_office_it).toDouble()
+                        this.longitude = resources.getString(R.string.long_office_it).toDouble()
+                    }
+                    getLocationDistance(locationMe,locationOffice)
+                }
+            }else {
+                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             }
         }
     }
@@ -66,7 +85,7 @@ class AbsentOfficeFragment : Fragment() {
                     Glide.with(this).load(imageBitmap).into(img_preview)
                     //imagePath = image
                 }
-            }else{
+            } else {
                 context?.showDialogInfo("Gagal Mengambil Image")
             }
             //validateButton()
@@ -92,7 +111,7 @@ class AbsentOfficeFragment : Fragment() {
         composite += provider.getUpdatedLocation(request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({location ->
+            .subscribe({ location ->
                 val lat = location.latitude
                 val lon = location.longitude
                 result.invoke(lat, lon)
@@ -103,7 +122,16 @@ class AbsentOfficeFragment : Fragment() {
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    private fun getLocationDistance(locationMe: Location, locationOffice: Location): Boolean {
+        val inMeters = 50
+        val distance = locationOffice.distanceTo(locationMe)
+        logi("distance is -> $distance \n inMeter is -> $inMeters")
+        logi("loc me is -> $locationMe \n loc office is -> $locationOffice")
+        return distance >= inMeters
     }
 }

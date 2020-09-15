@@ -25,6 +25,8 @@ android {
         resValue "string", "maps_app_id", prop.getProperty("maps.app.id")
         resValue "string", "base_url", prop.getProperty("base.url")
         resValue "string", "maps_search_url", prop.getProperty("maps.search.url")
+        resValue "string", "lat_office_it", prop.getProperty("office.lat.it")
+        resValue "string", "long_office_it", prop.getProperty("office.long.it")
     }
 
     buildTypes {

@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_back_white"
             app:title="Pemberitahuan"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@android:color/white"
+            android:background="@color/colorPrimaryDark"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
