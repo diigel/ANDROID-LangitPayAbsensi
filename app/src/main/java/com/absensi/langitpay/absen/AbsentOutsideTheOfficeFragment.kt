@@ -13,10 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
 import com.absensi.langitpay.absen.camera.CameraActivity
-import com.absensi.langitpay.absen.location.MarkLocation
+import com.absensi.langitpay.absen.location.LatLongParcel
+import com.absensi.langitpay.absen.location.MarkLocationActivity
 import com.absensi.langitpay.abstraction.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.maps.model.LatLng
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -27,6 +29,7 @@ import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 /**
  * Muhammad Ramdani 2020
  */
+
 class AbsentOutsideTheOfficeFragment : Fragment() {
 
     private val composite = CompositeDisposable()
@@ -46,7 +49,18 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
 
     private fun initView() {
         text_office_location.clicked {
-            startActivity(Intent(requireContext(), MarkLocation::class.java))
+            if (isLocationEnabled()) {
+                getLocation { latitude, longitude ->
+                    val latlong = LatLng(latitude ?: 0.0, longitude ?: 0.0)
+                    startActivityForResult(
+                        Intent(requireContext(), MarkLocationActivity::class.java)
+                            .putExtra("myLocation", latlong.toParcel()),50
+                    )
+                }
+            } else {
+                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+
         }
         img_preview.clicked {
             withPermission(Manifest.permission.CAMERA) {
@@ -58,27 +72,43 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                 }
             }
         }
+        btn_absen.clicked {
+            getLocation { latitude, longitude ->
+                if (isLocationEnabled()) {
+
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 20) {
-            val image = data?.extras?.get("image") as String?
-            if (image != null) {
-                context?.getBitmap(image) { imageBitmap ->
-                    lin_image_camera.gone()
-                    Glide.with(this).load(imageBitmap).into(img_preview)
-                    //imagePath = image
+        logi("resultCode $resultCode")
+        when {
+            resultCode == AppCompatActivity.RESULT_OK && requestCode == 20 -> {
+                val image = data?.extras?.get("image") as String?
+                if (image != null) {
+                    context?.getBitmap(image) { imageBitmap ->
+                        lin_image_camera.gone()
+                        Glide.with(this).load(imageBitmap).into(img_preview)
+                        //imagePath = image
+                    }
+                } else {
+                    context?.showDialogInfo("Gagal Mengambil Image")
                 }
-            } else {
-                context?.showDialogInfo("Gagal Mengambil Image")
+                //validateButton()
             }
-            //validateButton()
+            resultCode == AppCompatActivity.RESULT_OK && requestCode == 50 -> {
+                val dataLocation = data?.extras?.getParcelable<LatLongParcel>("result_location")
+                logi("data is $dataLocation")
+            }
         }
     }
 
     private fun getLocation(result: (latitude: Double?, longitude: Double?) -> Unit) {
         withPermission(Manifest.permission.ACCESS_FINE_LOCATION) {
-            requestLocation(result)
+            if (it) {
+                requestLocation(result)
+            }
         }
     }
 

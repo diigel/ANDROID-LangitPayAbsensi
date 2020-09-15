@@ -41,9 +41,9 @@
             android:name=".home.NotificationActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".absen.location.MarkLocation"
+        <activity android:name=".absen.location.MarkLocationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".absen.camera.CameraActivity" />
 

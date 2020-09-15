@@ -23,7 +23,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Name"
-                android:textColor="@color/text_color2"
+                android:textColor="@color/text_color4"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
                 android:gravity="end"
                 android:text="Muhammad Ramdani"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
@@ -60,7 +60,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="NIK"
-                android:textColor="@color/text_color2"
+                android:textColor="@color/text_color4"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                 android:gravity="end"
                 android:text="10112012"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
@@ -97,7 +97,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Division"
-                android:textColor="@color/text_color2"
+                android:textColor="@color/text_color4"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
                 android:gravity="end"
                 android:text="IT"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
@@ -128,31 +128,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_label_division" />
 
             <TextView
-                android:id="@+id/text_label_lokasi"
+                android:id="@+id/text_label_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Lokasi Absen"
-                android:textColor="@color/text_color2"
+                android:textColor="@color/text_color4"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
 
             <TextView
-                android:id="@+id/lokasi_kantor"
+                android:id="@+id/text_office_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:gravity="end"
+                android:gravity="end|center_vertical"
                 android:text="Kantor LangitPay"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="14sp"
+                android:drawablePadding="10dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/text_label_lokasi" />
+                app:layout_constraintTop_toTopOf="@+id/text_label_location"
+                app:drawableEndCompat="@drawable/ic_marker" />
 
             <View
                 android:id="@+id/view3"
@@ -162,7 +164,7 @@
                 android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_lokasi" />
+                app:layout_constraintTop_toBottomOf="@+id/text_office_location" />
 
             <ImageView
                 android:id="@+id/img_preview"

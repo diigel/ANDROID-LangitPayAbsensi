@@ -3,6 +3,7 @@ package com.absensi.langitpay.absen.location
 import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network
 import com.absensi.langitpay.network.response.GetLocation
+import com.absensi.langitpay.network.response.SearchLocation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -23,7 +24,7 @@ class MarkLocationRepository(private val composite: CompositeDisposable) {
             })
     }
 
-    fun getSearchLocation(at: String,placeName : String,key: String,result: (GetLocation?) -> Unit){
+    fun getSearchLocation(at: String,placeName : String,key: String,result: (SearchLocation?) -> Unit){
         composite += Network.getRoutes(BaseUrl.MAPS_SEARCH_URL)
             .getLocationSearch(at,placeName,key)
             .subscribeOn(Schedulers.io())

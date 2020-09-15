@@ -2,6 +2,7 @@ package com.absensi.langitpay.network
 
 import com.absensi.langitpay.network.response.GetLocation
 import com.absensi.langitpay.network.response.ResponseLogin
+import com.absensi.langitpay.network.response.SearchLocation
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -26,5 +27,5 @@ interface Routes {
         @Query("at") lat: String,
         @Query("q") placeName : String,
         @Query("apikey") apiKey: String
-    ) : Observable<GetLocation>
+    ) : Observable<SearchLocation>
 }

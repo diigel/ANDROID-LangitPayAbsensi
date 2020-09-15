@@ -12,9 +12,11 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,10 +25,17 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
+import com.absensi.langitpay.absen.location.LatLongParcel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import java.lang.IllegalArgumentException
+import java.lang.NullPointerException
 
 
 fun Context.toast(msg: String?) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -209,5 +218,58 @@ fun Context.showDialogInfo(
     if (!dialog.isShowing) {
         dialog.show()
     }
+}
+fun TextView.autoSize(composite: CompositeDisposable? = null, minSize: Float? = null) {
+    val disposable = textChanges()
+        .observeOn(AndroidSchedulers.mainThread())
+        .map { it.length }
+        .subscribe({
+            if (it > 10) {
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, minSize ?: 12f)
+            } else {
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            }
+        }, {
+            it.printStackTrace()
+        })
+
+    composite?.add(disposable)
+}
+
+fun LatLng.toParcel() : LatLongParcel {
+    return LatLongParcel(latitude,longitude)
+}
+
+fun LatLongParcel.toLatlong() : LatLng {
+    return LatLng(lat,long)
+}
+
+fun Activity.latLongExtras(key: String) : Lazy<LatLongParcel> {
+    return lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+        try {
+            intent.getParcelableExtra<LatLongParcel>(key)
+        }catch (e : NullPointerException){
+            e.printStackTrace()
+            throw IllegalArgumentException("key error")
+        }
+    }
+}
+
+fun Fragment.latLongExtras(key: String) : Lazy<LatLongParcel?> {
+    return lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+        try {
+            arguments?.getParcelable<LatLongParcel>(key)
+        }catch (e : NullPointerException){
+            e.printStackTrace()
+            throw IllegalArgumentException("key error")
+        }
+    }
+}
+
+fun Activity.hideKeyboard() {
+    var view = currentFocus
+    if (view == null) view = View(this)
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
