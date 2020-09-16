@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.absensi.langitpay.R
+import com.absensi.langitpay.abstraction.onBack
 import kotlinx.android.synthetic.main.activity_confirmation_absen.*
 
 class ConfirmationAbsenActivity : AppCompatActivity() {
@@ -15,11 +16,9 @@ class ConfirmationAbsenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_confirmation_absen)
 
         setSupportActionBar(toolbar)
-        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.colorPrimaryDark))
         toolbar.setNavigationOnClickListener {
-            onBackPressed()
+           onBack()
         }
-        toolbar.navigationIcon = ContextCompat.getDrawable(this,R.drawable.ic_back)
 
         vp.offscreenPageLimit = 2
         ViewPagerAdapter(supportFragmentManager).also {viewPagerAdapter ->

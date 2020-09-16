@@ -19,7 +19,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimaryDark"
+            app:titleTextColor="@android:color/white"
+            app:navigationIcon="@drawable/ic_back_white"
             app:title="Absen" />
     </com.google.android.material.appbar.AppBarLayout>
 

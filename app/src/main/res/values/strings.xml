@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">AbsensiKaryawanLangitPay</string>
-    <string name="pref_username">pref_username</string>
-    <string name="pref_password">pref_password</string>
+    <string name="pref_user_name">pref_user_name</string>
+    <string name="pref_user_password">pref_user_password</string>
+    <string name="pref_user_division">pref_user_division</string>
+    <string name="pref_user_email">pref_user_email</string>
+    <string name="pref_user_gender">pref_user_gender</string>
+    <string name="pref_user_nik">pref_user_nik</string>
+    <string name="pref_user_id">pref_user_id</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

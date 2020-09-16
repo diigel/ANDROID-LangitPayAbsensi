@@ -75,9 +75,7 @@
             android:id="@+id/rel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="100dp"
             android:background="@drawable/bg_rounded_top_shadow"
-            tools:targetApi="lollipop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -87,8 +85,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/text_username"
+                android:layout_marginStart="30dp"
                 android:layout_alignBottom="@+id/text_email"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:contentDescription="Images Human"
                 android:src="@drawable/ic_account_circle" />
 
@@ -98,22 +97,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_toEndOf="@+id/img_account"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Muhammad Ramdani" />
+
+            <TextView
+                android:id="@+id/text_nik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_username"
+                android:layout_alignStart="@+id/text_username"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/text_color2"
+                android:textSize="18sp"
+                tools:text="10112012" />
 
             <TextView
                 android:id="@+id/text_devision"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text_username"
-                android:layout_marginStart="80dp"
+                android:layout_below="@+id/text_nik"
+                android:layout_alignStart="@+id/text_nik"
                 android:layout_marginEnd="20dp"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 tools:text="IT Devision" />
 
             <TextView
@@ -121,11 +137,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_devision"
-                android:layout_marginStart="80dp"
+                android:layout_alignStart="@+id/text_username"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/text_color2"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 tools:text="dhani.it@langitpyament.com" />
 
             <Button

@@ -27,6 +27,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDW1AJRJaJqYW0TV2COEfzi6YpgKJcByyE"/>
 
+        <service
+            android:name=".notification.FirebaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -38,7 +46,7 @@
         </activity>
 
         <activity
-            android:name=".home.NotificationActivity"
+            android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".absen.location.MarkLocationActivity"

@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "13630243320",
-    "firebase_url": "https://demoabsen.firebaseio.com",
-    "project_id": "demoabsen",
-    "storage_bucket": "demoabsen.appspot.com"
+    "project_number": "1037070547229",
+    "firebase_url": "https://langitpayabsensi-1bc50.firebaseio.com",
+    "project_id": "langitpayabsensi-1bc50",
+    "storage_bucket": "langitpayabsensi-1bc50.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:13630243320:android:845fea647e7f26128b560d",
+        "mobilesdk_app_id": "1:1037070547229:android:75bc68ee3780fe67ccc9f4",
         "android_client_info": {
           "package_name": "com.absensi.langitpay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "13630243320-2mtu0q9bi8b981r5cqvlstl9rk7283nd.apps.googleusercontent.com",
+          "client_id": "1037070547229-5d2nqjlf4jgsncull2hdajgrt96ana34.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.absensi.langitpay",
+            "certificate_hash": "e8984adcd21a8290f2205199cbe6920300b27745"
+          }
+        },
+        {
+          "client_id": "1037070547229-okbe5o836gq31cui9uc6k8shi0dq6csr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEPzspdGo0aDeZ7UDehGpeywjXlmXnFWQ"
+          "current_key": "AIzaSyAkZQ_QBOfsRFw5p7bx7_POH8LtdgIQVVw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "13630243320-2mtu0q9bi8b981r5cqvlstl9rk7283nd.apps.googleusercontent.com",
+              "client_id": "1037070547229-okbe5o836gq31cui9uc6k8shi0dq6csr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

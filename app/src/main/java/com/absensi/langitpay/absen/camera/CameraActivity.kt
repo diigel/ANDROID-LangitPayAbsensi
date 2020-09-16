@@ -7,11 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.absensi.langitpay.R
-import com.absensi.langitpay.abstraction.loaderDialog
-import com.absensi.langitpay.abstraction.toast
-import com.absensi.langitpay.abstraction.visibilism
-import com.absensi.langitpay.abstraction.withPermissions
+import com.absensi.langitpay.abstraction.*
 import com.bumptech.glide.Glide
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
@@ -34,6 +32,14 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
         camera.setLifecycleOwner(this)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            if (camera.isOpened){
+               onBack()
+            }else{
+                btn_try_again.performClick()
+            }
+        }
 
         camera.setPictureSize(setSizeCamera())
         camera.addCameraListener(object : CameraListener() {
@@ -97,7 +103,7 @@ class CameraActivity : AppCompatActivity() {
                                 val intent = Intent()
                                 intent.putExtra("image", result.absolutePath)
                                 setResult(Activity.RESULT_OK, intent)
-                                finish()
+                                onBack()
                             },500)
                         }
                     }

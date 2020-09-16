@@ -28,7 +28,7 @@ data class DataLogin(
     @SerializedName("id")
     val id: Int,
     @SerializedName("NIK")
-    val nIK: Int,
+    val nik: Int,
     @SerializedName("name")
     val name: String,
     @SerializedName("password")

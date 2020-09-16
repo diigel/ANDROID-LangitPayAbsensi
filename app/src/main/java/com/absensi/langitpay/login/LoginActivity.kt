@@ -1,14 +1,16 @@
 package com.absensi.langitpay.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.R
-import com.absensi.langitpay.abstraction.clicked
+import com.absensi.langitpay.abstraction.*
+import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network
 import com.absensi.langitpay.network.SharedPref
+import com.absensi.langitpay.network.response.ResponseLogin
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,77 +22,117 @@ import java.util.*
 class LoginActivity : AppCompatActivity() {
 
     private val composite = CompositeDisposable()
-    private val uniqueID: String = UUID.randomUUID().toString()
 
-    private val isValidArray = mutableListOf("","")
+    private val isValidArray = mutableListOf("", "")
+
+    private val loader by lazy {
+        loaderDialog()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        setLogin()
-        saveButton.clicked {
-            startActivity(Intent(this, HomeActivity::class.java))
+        setupTextInput()
+        btn_login.clicked {
+            requestLogin(
+                isValidArray[0],
+                isValidArray[1]
+            )
         }
     }
 
-    private fun setLogin() {
+    private fun setupTextInput() {
         composite += et_username.textChanges()
             .subscribeOn(Schedulers.io())
-            .map { it.toString() }
             .observeOn(AndroidSchedulers.mainThread())
+            .map { it.toString() }
             .subscribe({ username ->
-                if (username.length > 4) {
-                    isValidArray[0] = username
-
+                if (username.length in 1..3) {
+                    isValidArray[0] = ""
+                    username_text_alert.error = "Username harus lebih dari 4 karakter"
                 } else {
-                    //text_input_username.error = "username harus lebih dari 4 karakter"
+                    isValidArray[0] = username
+                    username_text_alert.error = null
                 }
                 checkEnableButtonNext()
             }, {
                 it.printStackTrace()
             })
 
-//        composite += et_password.textChanges()
-//            .subscribeOn(Schedulers.io())
-//            .map { it.toString() }
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({ password ->
-//                if (password.length > 4) {
-//                    isValidArray[1] = password
-//                } else {
-//                    text_input_password.error = "Password harus lebih dari 4 karakter"
-//                }
-//                checkEnableButtonNext()
-//            }, {
-//                it.printStackTrace()
-//            })
-    }
-
-    private fun requestLogin(username: String, password: String) {
-        composite += Network.getRoutes(BaseUrl.BASE_URL).login(username, password, uniqueID)
+        composite += et_password.textChanges()
             .subscribeOn(Schedulers.io())
+            .map { it.toString() }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ login ->
-                if (login.status) {
-                    SharedPref.savePrefDeviceUniqId(login.data?.deviceUniq)
-                    SharedPref.saveValue(
-                        resources.getString(R.string.pref_username),
-                        login.data?.name
-                    )
-                    SharedPref.saveValue(
-                        resources.getString(R.string.pref_password),
-                        login.data?.password
-                    )
-                    SharedPref.savePrefDeviceUniqId(login.data?.deviceUniq)
-
+            .subscribe({ password ->
+                if (password.length in 1..3) {
+                    isValidArray[1] = ""
+                    password_text_alert.error = "Password harus lebih dari 4 karakter"
+                } else {
+                    isValidArray[1] = password
+                    password_text_alert.error = null
                 }
+                checkEnableButtonNext()
             }, {
                 it.printStackTrace()
             })
     }
 
+    private fun requestLogin(username: String, password: String) {
+        loader.show()
+        getToken { token ->
+            composite += Network.getRoutes(BaseUrl.BASE_URL)
+                .login(username, password, getDeviceUniqueId(this), token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ login ->
+                    loader.dismiss()
+                    if (login.status) {
+                        requestSavePref(token,login)
+                        intentTo(HomeActivity::class.java)
+                    } else {
+                        showDialogInfo(login.message)
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        }
+    }
+
+    private fun requestSavePref(token : String, login: ResponseLogin){
+        SharedPref.savePrefDeviceUniqId(login.data?.deviceUniq)
+        SharedPref.savePrefToken(token)
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_division),
+            login.data?.division
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_name),
+            login.data?.name
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_password),
+            login.data?.password
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_id),
+            login.data?.id.toString()
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_nik),
+            login.data?.nik.toString()
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_gender),
+            login.data?.gender
+        )
+        SharedPref.saveValue(
+            resources.getString(R.string.pref_user_email),
+            login.data?.email
+        )
+    }
+
     private fun checkEnableButtonNext() {
-       // btn_login.isEnabled = isValidArray.isNotEmpty()
+        btn_login.isEnabled = !isValidArray.contains("")
     }
 }

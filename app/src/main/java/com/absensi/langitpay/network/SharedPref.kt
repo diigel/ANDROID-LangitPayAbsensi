@@ -7,6 +7,7 @@ object SharedPref {
     private const val KEY_PREFS = "KEY_PREFS"
     private const val KEY_AUTH_DEVICE_UNIQ_ID = "KEY_AUTH_DEVICE_UNIQ_ID"
     private const val KEY_AUTH_DEVICE_DEV = "KEY_AUTH_DEVICE_DEV"
+    private const val KEY_AUTH_TOKEN = "KEY_AUTH_TOKEN"
 
     private fun getApplication() = AbsensiLangitPayAplication.getApplicationContext()
     private fun sharedPrefs() = getApplication().getSharedPreferences(KEY_PREFS, Context.MODE_PRIVATE)
@@ -21,10 +22,17 @@ object SharedPref {
         editor.putString(KEY_AUTH_DEVICE_DEV, deviceUniqId).apply()
     }
 
+    fun savePrefToken(token: String?) {
+        val editor = sharedPrefs().edit()
+        editor.putString(KEY_AUTH_TOKEN, token).apply()
+    }
+
     fun getPrefDeviceUniqId(): String? = sharedPrefs().getString(KEY_AUTH_DEVICE_UNIQ_ID, "")
 
     fun getPrefDeviceDev(): String? = sharedPrefs().getString(KEY_AUTH_DEVICE_DEV, "")
     private const val PREFS_NAME = "MR_PREFS"
+
+    fun getPrefToken(): String? = sharedPrefs().getString(KEY_AUTH_TOKEN, "")
 
     fun saveValue(key: String, value: String?) {
         val settings: SharedPreferences = getApplication().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

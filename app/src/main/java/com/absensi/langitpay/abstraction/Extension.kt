@@ -5,11 +5,13 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
@@ -26,14 +28,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
 import com.absensi.langitpay.absen.location.LatLongParcel
+import com.absensi.langitpay.login.LoginActivity
+import com.absensi.langitpay.network.AbsensiLangitPayAplication
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
 
@@ -272,4 +280,26 @@ fun Activity.hideKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
+fun <T> route(
+    call: Observable<T>,
+    io: ((T) -> Unit)? = null,
+    result: ((T) -> Unit)? = null,
+    error: ((throwable: Throwable) -> Unit)? = null
+): Disposable {
+    return call
+        .subscribeOn(Schedulers.io())
+        .doOnNext {
+            io?.invoke(it)
+        }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+            result?.invoke(it)
+        }, {
+            it.printStackTrace()
+            error?.invoke(it)
+        })
+}
+
+
 

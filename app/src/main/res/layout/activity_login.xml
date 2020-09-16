@@ -14,13 +14,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:drawablePadding="10dp"
         android:gravity="top"
         android:text="LangitPay"
         android:textColor="@android:color/white"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:drawableStartCompat="@drawable/logo_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:layout_marginTop="25dp"
         android:text="Absensi"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -42,25 +42,26 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Kerja kita prestasi bangsa!"
         android:textColor="@android:color/white"
         android:textSize="25sp"
-        android:layout_marginTop="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameTextAlert"
+        android:id="@+id/username_text_alert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="Text input layout pin baru"
         android:layout_marginBottom="10dp"
-        app:errorTextColor="@android:color/holo_red_dark"
+        android:contentDescription="Text input layout pin baru"
+        app:errorEnabled="true"
+        app:errorTextColor="@android:color/holo_orange_light"
         app:hintEnabled="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="@+id/passwordTextAlert"
-        app:layout_constraintStart_toStartOf="@+id/passwordTextAlert"
+        app:layout_constraintEnd_toEndOf="@+id/password_text_alert"
+        app:layout_constraintStart_toStartOf="@+id/password_text_alert"
         tools:ignore="ContentDescription">
 
         <EditText
@@ -80,22 +81,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordTextAlert"
+        android:id="@+id/password_text_alert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="Text input layout konfirmasi pin"
-        app:errorTextColor="@android:color/holo_red_dark"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="@+id/saveButton"
-        app:layout_constraintStart_toStartOf="@+id/saveButton"
         android:layout_marginTop="10dp"
+        android:contentDescription="Text input layout konfirmasi pin"
+        app:errorEnabled="true"
+        app:errorTextColor="@android:color/holo_orange_light"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@android:color/white"
         tools:ignore="ContentDescription">
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_border"
@@ -112,18 +114,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/bg_button_blue_selector"
         android:text="masuk"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextAlert"
+        app:layout_constraintTop_toBottomOf="@+id/password_text_alert"
         tools:ignore="HardcodedText,SmallSp" />
 
     <androidx.constraintlayout.widget.Guideline

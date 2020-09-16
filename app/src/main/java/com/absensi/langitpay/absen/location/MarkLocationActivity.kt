@@ -82,7 +82,7 @@ class MarkLocationActivity : AppCompatActivity() {
                     icon_marker_shadow.visible()
                     toolbar.setBackgroundColor(Color.TRANSPARENT)
                 }
-                !rv_address.isVisible -> onBackPressed()
+                !rv_address.isVisible -> onBack()
             }
         }
 

@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:ignore="HardcodedText">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Photo"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"
+        app:navigationIcon="@drawable/ic_back_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/camera"
         android:layout_width="match_parent"
@@ -27,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_take_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageView
             android:id="@+id/img_watermark"
