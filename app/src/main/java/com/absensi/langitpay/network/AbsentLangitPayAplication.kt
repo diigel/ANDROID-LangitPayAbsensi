@@ -2,13 +2,11 @@ package com.absensi.langitpay.network
 
 import android.app.Application
 import android.content.Context
-import com.absensi.langitpay.R
-import com.absensi.langitpay.abstraction.toast
 
-class AbsensiLangitPayAplication : Application() {
+class AbsentLangitPayAplication : Application() {
 
     companion object {
-        lateinit var instance: AbsensiLangitPayAplication
+        lateinit var instance: AbsentLangitPayAplication
         fun getApplicationContext(): Context = instance.applicationContext
     }
 

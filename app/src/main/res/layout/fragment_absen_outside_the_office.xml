@@ -15,7 +15,65 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".absen.AbsentOfficeFragment">
+            tools:context=".absent.AbsentOfficeFragment">
+
+            <ImageView
+                android:id="@+id/img_preview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_dash"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:id="@+id/lin_image_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/img_preview"
+                app:layout_constraintEnd_toEndOf="@+id/img_preview"
+                app:layout_constraintStart_toStartOf="@+id/img_preview"
+                app:layout_constraintTop_toTopOf="@+id/img_preview">
+
+                <ImageView
+                    android:id="@+id/background_preview"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_photo_gray"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/text_noted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Klik Untuk Mengambil Photo"
+                    android:textColor="@color/text_color2"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/light_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_preview" />
 
             <TextView
                 android:id="@+id/text_label_username"
@@ -28,7 +86,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/view_top" />
 
             <TextView
                 android:id="@+id/text_username"
@@ -147,8 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:gravity="end|center_vertical"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Pilih Lokasi"
+                android:text="Kantor"
                 android:textColor="@color/text_color2"
                 android:drawablePadding="10dp"
                 android:textSize="14sp"
@@ -169,6 +226,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_office_location" />
 
             <TextView
+                android:id="@+id/text_cek_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Klik Untuk Pilih Lokasi"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+            <TextView
                 android:id="@+id/text_label_noted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,10 +251,10 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+                app:layout_constraintTop_toBottomOf="@+id/text_cek_location" />
 
             <EditText
-                android:id="@+id/lokasi_noted"
+                android:id="@+id/et_location_noted"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="20dp"
@@ -206,56 +278,7 @@
                 android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lokasi_noted" />
-
-            <ImageView
-                android:id="@+id/img_preview"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_margin="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_dash"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:id="@+id/lin_image_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/img_preview"
-                app:layout_constraintEnd_toEndOf="@+id/img_preview"
-                app:layout_constraintStart_toStartOf="@+id/img_preview"
-                app:layout_constraintTop_toTopOf="@+id/img_preview">
-
-                <ImageView
-                    android:id="@+id/background_preview"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:padding="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_add_photo_gray"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/text_noted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Klik Untuk Mengambil Photo"
-                    android:textColor="@color/text_color2"
-                    android:textSize="14sp"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/et_location_noted" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -271,7 +294,7 @@
         android:id="@+id/btn_absen"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/bg_button_blue_selector"
         android:text="Verifikasi Absen"
         android:textAllCaps="false"
         android:textColor="@android:color/white"

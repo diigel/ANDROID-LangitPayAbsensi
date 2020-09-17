@@ -1,4 +1,4 @@
-package com.absensi.langitpay.absen.location
+package com.absensi.langitpay.absent.location
 
 import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network

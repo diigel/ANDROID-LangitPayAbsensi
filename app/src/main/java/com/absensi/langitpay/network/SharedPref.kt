@@ -9,7 +9,7 @@ object SharedPref {
     private const val KEY_AUTH_DEVICE_DEV = "KEY_AUTH_DEVICE_DEV"
     private const val KEY_AUTH_TOKEN = "KEY_AUTH_TOKEN"
 
-    private fun getApplication() = AbsensiLangitPayAplication.getApplicationContext()
+    private fun getApplication() = AbsentLangitPayAplication.getApplicationContext()
     private fun sharedPrefs() = getApplication().getSharedPreferences(KEY_PREFS, Context.MODE_PRIVATE)
 
     fun savePrefDeviceUniqId(deviceUniqId: String?) {

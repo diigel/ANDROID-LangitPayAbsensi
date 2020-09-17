@@ -1,4 +1,4 @@
-package com.absensi.langitpay.absen.camera
+package com.absensi.langitpay.absent.camera
 
 import android.Manifest
 import android.app.Activity
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.*
 import com.bumptech.glide.Glide

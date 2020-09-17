@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.location.LocationManager
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
@@ -23,9 +24,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import com.absensi.langitpay.R
-import com.absensi.langitpay.absen.location.LatLongParcel
+import com.absensi.langitpay.absent.location.LatLongParcel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -322,6 +324,14 @@ fun String.formatDate(format: String): String {
     dateParsing.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
     return dateParsing.format(getDate())
 }
+
+fun Context.isLocationEnabled(): Boolean {
+    val locationManager =
+        this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+}
+
+
 
 
 

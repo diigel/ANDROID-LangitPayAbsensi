@@ -1,11 +1,10 @@
 package com.absensi.langitpay.network
 
 import com.absensi.langitpay.abstraction.getDeviceUniqueId
-import com.absensi.langitpay.network.response.GetLocation
-import com.absensi.langitpay.network.response.Notification
-import com.absensi.langitpay.network.response.User
-import com.absensi.langitpay.network.response.SearchLocation
+import com.absensi.langitpay.network.response.*
 import io.reactivex.Observable
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface Routes {
@@ -36,7 +35,7 @@ interface Routes {
     @POST("request-update-token")
     fun updateToken(
         @Field("token") token: String,
-        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsensiLangitPayAplication.getApplicationContext())
+        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsentLangitPayAplication.getApplicationContext())
     ) : Observable<User>
 
 
@@ -46,6 +45,21 @@ interface Routes {
     @FormUrlEncoded
     @POST("get-user")
     fun getUser(
-        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsensiLangitPayAplication.getApplicationContext())
+        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsentLangitPayAplication.getApplicationContext())
     ) : Observable<User>
+
+    @Multipart
+    @POST("request-absen")
+    fun requestAbsent(
+        @Part("user_id") userId : RequestBody? = null,
+        @Part("name") name : RequestBody? = null,
+        @Part("type_absensi") typeAbsent : RequestBody? = null,
+        @Part image : MultipartBody.Part? = null,
+        @Part("address") address : RequestBody? = null,
+        @Part("latitude") latitude : RequestBody? = null,
+        @Part("longitude") longitude : RequestBody? = null,
+        @Part("division") division : RequestBody? = null,
+        @Part("noted") noted : RequestBody? = null,
+        @Part("device_uniq") deviceUniq: RequestBody? = null
+    ) : Observable<RequestAbsent>
 }

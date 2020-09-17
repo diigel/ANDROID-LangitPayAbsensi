@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".network.AbsensiLangitPayAplication"
+        android:name=".network.AbsentLangitPayAplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_langitpay_absensi"
@@ -49,14 +49,14 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".absen.location.MarkLocationActivity"
+        <activity android:name=".absent.location.MarkLocationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".absen.camera.CameraActivity" />
+        <activity android:name=".absent.camera.CameraActivity" />
 
         <activity
-            android:name=".absen.ConfirmationAbsenActivity"
+            android:name=".absent.ConfirmationAbsenActivity"
             android:screenOrientation="portrait" />
 
         <activity

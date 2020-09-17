@@ -100,7 +100,7 @@ fun View.intentTo(c: String, extIntent: (Intent.() -> Unit)? = null) {
     )
 }
 
-fun Activity.onBack(){
+fun Activity.onBack() {
     onBackPressed()
     overridePendingTransition(
         R.anim.left_in,
@@ -108,8 +108,10 @@ fun Activity.onBack(){
     )
 }
 
-fun Fragment.onBack(){
-    fragmentManager?.popBackStack()
+fun Fragment.onBack() {
+    if (activity != null){
+        activity?.finish()
+    }
     activity?.overridePendingTransition(
         R.anim.left_in,
         R.anim.right_out

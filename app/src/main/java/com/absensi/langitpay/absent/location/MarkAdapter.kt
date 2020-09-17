@@ -1,4 +1,4 @@
-package com.absensi.langitpay.absen.location
+package com.absensi.langitpay.absent.location
 
 import android.view.LayoutInflater
 import android.view.View

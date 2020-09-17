@@ -10,7 +10,7 @@ enum class BaseUrl {
 }
 
 object GetBaseUrl {
-    private val context: Context = AbsensiLangitPayAplication.getApplicationContext().applicationContext
+    private val context: Context = AbsentLangitPayAplication.getApplicationContext().applicationContext
     val baseUrl = context.resources.getString(R.string.base_url)
     val mapsUrl = context.resources.getString(R.string.maps_url)
     val mapsSearchUrl = context.resources.getString(R.string.maps_search_url)
