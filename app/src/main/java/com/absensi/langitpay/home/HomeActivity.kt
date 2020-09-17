@@ -13,6 +13,7 @@ import com.absensi.langitpay.absent.ConfirmationAbsenActivity
 import com.absensi.langitpay.abstraction.clicked
 import com.absensi.langitpay.abstraction.intentTo
 import com.absensi.langitpay.abstraction.loaderDialog
+import com.absensi.langitpay.abstraction.showDialogInfo
 import com.absensi.langitpay.network.SharedPref
 import com.absensi.langitpay.network.response.DataUser
 import com.absensi.langitpay.notification.NotificationActivity
@@ -55,28 +56,34 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userHandle (){
-        if (requestSaveShared()){
+        if (SharedPref.getPrefDeviceUniqId().isNullOrEmpty()){
             loader.dismiss()
-            text_username.text = SharedPref.getValue(resources.getString(R.string.pref_user_name))
-            text_devision.text = SharedPref.getValue(resources.getString(R.string.pref_user_division))
-            text_email.text = SharedPref.getValue(resources.getString(R.string.pref_user_email))
-            text_nik.text = SharedPref.getValue(resources.getString(R.string.pref_user_nik))
-        }else{
-            viewModel.getUser().observe(this, Observer {
+            viewModel.getUser().observe(this, Observer {data ->
                 loader.dismiss()
-                val data = it.data
                 if (data != null){
-                    text_username.text = data.name
-                    text_devision.text = data.division
-                    text_email.text = data.email
-                    text_nik.text = data.nik.toString()
+                    setupView(
+                        data.name,
+                        data.division,
+                        data.email,
+                        data.nik.toString()
+                    )
                     requestSaveShared(data)
+                }else {
+                    showDialogInfo("Maaf Terjadi Kesalahan")
                 }
             })
+        }else{
+            loader.dismiss()
+            setupView(
+                SharedPref.getValue(resources.getString(R.string.pref_user_name)),
+                SharedPref.getValue(resources.getString(R.string.pref_user_division)),
+                SharedPref.getValue(resources.getString(R.string.pref_user_email)),
+                SharedPref.getValue(resources.getString(R.string.pref_user_nik))
+            )
         }
     }
 
-    private fun requestSaveShared(data : DataUser? = null) : Boolean{
+    private fun requestSaveShared(data : DataUser? = null) {
         SharedPref.saveValue(resources.getString(R.string.pref_user_name),data?.name)
         SharedPref.saveValue(resources.getString(R.string.pref_user_division),data?.division)
         SharedPref.saveValue(resources.getString(R.string.pref_user_email),data?.email)
@@ -84,6 +91,13 @@ class HomeActivity : AppCompatActivity() {
         SharedPref.saveValue(resources.getString(R.string.pref_user_gender),data?.gender)
         SharedPref.saveValue(resources.getString(R.string.pref_user_id),data?.id.toString())
         SharedPref.saveValue(resources.getString(R.string.pref_user_password),data?.password)
-        return data != null
+    }
+
+
+    private fun setupView(name : String?, division : String?,email : String?,nik : String?){
+        text_username.text = name
+        text_devision.text = division
+        text_email.text = email
+        text_nik.text = nik
     }
 }

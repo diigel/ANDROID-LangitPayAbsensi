@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/bg_button_unactive"
+        android:drawable="@drawable/bg_unactive"
         android:state_enabled="false"/>
     <item
         android:drawable="@drawable/bg_blue"

@@ -203,7 +203,7 @@
                 android:layout_marginEnd="20dp"
                 android:drawablePadding="10dp"
                 android:gravity="end|center_vertical"
-                android:text="Kantor LangitPay"
+                android:text="Kantor"
                 android:textColor="@color/text_color2"
                 android:textSize="14sp"
                 android:textStyle="bold"

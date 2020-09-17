@@ -91,6 +91,8 @@ class LoginActivity : AppCompatActivity() {
                         showDialogInfo(login.message)
                     }
                 }, {
+                    loader.dismiss()
+                    showDialogInfo("Maaf terjadi kesalahan")
                     it.printStackTrace()
                 })
         }

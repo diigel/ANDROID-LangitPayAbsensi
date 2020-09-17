@@ -35,10 +35,14 @@ class NotificationActivity : AppCompatActivity() {
         adapter.updateNetworkState(NetworkState.LOADING)
         viewModel.getNotification().observe(this, Observer {
             adapter.updateNetworkState(NetworkState.LOADED)
-            if (it.data != null){
-                adapter.updateList(it.data)
+            if (it != null){
+                if (it.data != null){
+                    adapter.updateList(it.data)
+                }else{
+                    adapter.updateNetworkState(NetworkState.empty(it.message))
+                }
             }else{
-                adapter.updateNetworkState(NetworkState.empty(it.message))
+                adapter.updateNetworkState(NetworkState.ERROR)
             }
         })
     }

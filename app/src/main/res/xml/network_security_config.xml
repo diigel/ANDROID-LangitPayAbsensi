@@ -8,6 +8,6 @@
     </base-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">192.168.100.29</domain>
+        <domain includeSubdomains="true">192.168.100.2</domain>
     </domain-config>
 </network-security-config>

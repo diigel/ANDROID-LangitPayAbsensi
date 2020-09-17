@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.*
 import com.bumptech.glide.Glide
+import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.size.SizeSelector
@@ -61,6 +62,14 @@ class CameraActivity : AppCompatActivity() {
                     }
                 })
             }
+
+            override fun onCameraError(exception: CameraException) {
+                super.onCameraError(exception)
+                loader.dismiss()
+                onBack()
+                exception.printStackTrace()
+            }
+
         })
 
         btn_take_picture.setOnClickListener {
@@ -109,7 +118,7 @@ class CameraActivity : AppCompatActivity() {
                 }
             }else{
                 btn_upload.isEnabled = false
-                btn_upload.setBackgroundResource(R.drawable.bg_button_unactive)
+                btn_upload.setBackgroundResource(R.drawable.bg_button_unactive_rounded)
                 toast("Terjadi Kesalahan Silahkan Ambil Photo Lagi")
             }
         }

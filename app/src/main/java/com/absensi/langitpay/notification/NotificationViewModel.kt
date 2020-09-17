@@ -23,6 +23,7 @@ class NotificationViewModel : ViewModel() {
             .subscribe({
                 dataNotification.postValue(it)
             },{
+                dataNotification.postValue(null)
                 it.printStackTrace()
             })
 
