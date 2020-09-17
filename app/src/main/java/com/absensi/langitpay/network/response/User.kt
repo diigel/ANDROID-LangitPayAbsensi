@@ -3,18 +3,18 @@ package com.absensi.langitpay.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseLogin(
+data class User(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: DataLogin? = null,
+    val `data`: DataUser? = null,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
     val status: Boolean
 )
 
-data class DataLogin(
+data class DataUser(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("device_uniq")

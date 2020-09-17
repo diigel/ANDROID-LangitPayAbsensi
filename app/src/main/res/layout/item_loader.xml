@@ -6,15 +6,16 @@
     android:orientation="vertical">
 
     <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/shimmer_frame"/>
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_gravity="center"
         android:visibility="visible" />
 
@@ -22,21 +23,21 @@
         android:id="@+id/images_network"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="center"
         android:padding="30dp"
-        android:src="@drawable/image_no_data" />
+        android:src="@drawable/image_no_data"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/text_lost_connection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-20dp"
-        android:visibility="gone"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:alpha="0.6"
         android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         tools:text="Cie tidak ada kuota ya :p" />
 
 

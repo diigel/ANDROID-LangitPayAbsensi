@@ -1,7 +1,5 @@
 package com.absensi.langitpay.login
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.absensi.langitpay.R
@@ -10,14 +8,13 @@ import com.absensi.langitpay.home.HomeActivity
 import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network
 import com.absensi.langitpay.network.SharedPref
-import com.absensi.langitpay.network.response.ResponseLogin
+import com.absensi.langitpay.network.response.User
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -99,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestSavePref(token : String, login: ResponseLogin){
+    private fun requestSavePref(token : String, login: User){
         SharedPref.savePrefDeviceUniqId(login.data?.deviceUniq)
         SharedPref.savePrefToken(token)
         SharedPref.saveValue(

@@ -3,7 +3,7 @@ package com.absensi.langitpay.network
 import com.absensi.langitpay.abstraction.getDeviceUniqueId
 import com.absensi.langitpay.network.response.GetLocation
 import com.absensi.langitpay.network.response.Notification
-import com.absensi.langitpay.network.response.ResponseLogin
+import com.absensi.langitpay.network.response.User
 import com.absensi.langitpay.network.response.SearchLocation
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -17,7 +17,7 @@ interface Routes {
         @Field("password") password: String? = null,
         @Field("device_uniq") deviceUniq: String? = null,
         @Field("token") token : String? = null
-    ): Observable<ResponseLogin>
+    ): Observable<User>
 
     @GET("/v1/revgeocode")
     fun getLocation(
@@ -35,11 +35,17 @@ interface Routes {
     @FormUrlEncoded
     @POST("request-update-token")
     fun updateToken(
-        @Query("token") token: String,
-        @Query("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsensiLangitPayAplication.getApplicationContext())
-    ) : Observable<ResponseLogin>
+        @Field("token") token: String,
+        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsensiLangitPayAplication.getApplicationContext())
+    ) : Observable<User>
 
 
     @POST("get-notification")
     fun getNotification() : Observable<Notification>
+
+    @FormUrlEncoded
+    @POST("get-user")
+    fun getUser(
+        @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsensiLangitPayAplication.getApplicationContext())
+    ) : Observable<User>
 }

@@ -1,6 +1,13 @@
 package com.absensi.langitpay.notification
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.absensi.langitpay.R
 import com.absensi.langitpay.abstraction.logi
 import com.absensi.langitpay.abstraction.route
@@ -9,11 +16,9 @@ import com.absensi.langitpay.network.Network
 import com.absensi.langitpay.network.SharedPref
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import io.reactivex.disposables.CompositeDisposable
 
 class FirebaseMessaging : FirebaseMessagingService() {
 
-    private val compositeDisposable = CompositeDisposable()
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
@@ -23,9 +28,10 @@ class FirebaseMessaging : FirebaseMessagingService() {
 
         val title = remoteMessage.data["title"]
         val message = remoteMessage.data["message"]
+        val millis = System.currentTimeMillis()
         logi("message is -> ${remoteMessage.data}")
 
-        val builder = NotificationCompat.Builder(this, "LP-DEFAULT")
+        val builder = NotificationCompat.Builder(this, "LP-ABSENSI")
             .setSmallIcon(R.drawable.ic_langitpay_absensi)
             .setContentTitle(title)
             .setContentText(message)
@@ -35,6 +41,29 @@ class FirebaseMessaging : FirebaseMessagingService() {
                     .bigText(message)
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val intent = Intent(this, NotificationActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntentNotification = PendingIntent.getActivity(
+            this,
+            millis.toInt(),
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT
+        )
+        builder.setContentIntent(pendingIntentNotification)
+
+        // with(NotificationManagerCompat.from(this)) {
+        //    // notificationId is a unique int for each notification that you must define
+        //    notify(notificationId, builder.build())
+        //}
+        NotificationManagerCompat.from(this).run {
+            notify(getRandomId(), builder.build())
+        }
+    }
+
+    fun getRandomId(): Int {
+        return System.currentTimeMillis().toString().takeLast(4).toInt()
     }
 
     override fun onNewToken(token: String) {
@@ -43,10 +72,5 @@ class FirebaseMessaging : FirebaseMessagingService() {
         route(Network.getRoutes(BaseUrl.BASE_URL).updateToken(token),result = {
             logi("update token is -> ${it.message}")
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 }
