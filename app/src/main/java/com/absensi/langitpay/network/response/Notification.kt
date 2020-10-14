@@ -21,6 +21,8 @@ data class DataNotification(
     val id: Int,
     @SerializedName("message")
     val message: String,
+    @SerializedName("status")
+    val status: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("type")

@@ -28,13 +28,14 @@ class FirebaseMessaging : FirebaseMessagingService() {
 
         val title = remoteMessage.data["title"]
         val message = remoteMessage.data["message"]
+        val status = remoteMessage.data["status"]
         val millis = System.currentTimeMillis()
         logi("message is -> ${remoteMessage.data}")
 
         val builder = NotificationCompat.Builder(this, "LP-ABSENSI")
             .setSmallIcon(R.drawable.ic_langitpay_absensi)
             .setContentTitle(title)
-            .setContentText(message)
+            .setContentText("$status \n $message")
             .setAutoCancel(true)
             .setStyle(
                 NotificationCompat.BigTextStyle()
@@ -53,10 +54,6 @@ class FirebaseMessaging : FirebaseMessagingService() {
         )
         builder.setContentIntent(pendingIntentNotification)
 
-        // with(NotificationManagerCompat.from(this)) {
-        //    // notificationId is a unique int for each notification that you must define
-        //    notify(notificationId, builder.build())
-        //}
         NotificationManagerCompat.from(this).run {
             notify(getRandomId(), builder.build())
         }

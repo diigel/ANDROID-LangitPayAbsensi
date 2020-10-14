@@ -115,7 +115,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                         requestAbsent()
                     } else {
                         context?.showDialogInfo(
-                            "Lokasi Tidak Akurat")
+                            "Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
                     }
                 }
             }else{

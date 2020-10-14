@@ -33,7 +33,7 @@ class NotificationHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bindView(data : DataNotification) = itemView.run {
         val date = data.createdAt.apiToMonthDay()
-        text_date.text = "Info - $date"
+        text_date.text = "${data.status} - $date"
         text_title.text = data.title
         text_message.text = data.message
     }
