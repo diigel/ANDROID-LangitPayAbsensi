@@ -60,6 +60,9 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
     }
 
     private fun initView() {
+        text_username.text = SharedPref.getValue(resources.getString(R.string.pref_user_name))
+        text_nik.text = SharedPref.getValue(resources.getString(R.string.pref_user_nik))
+        text_division.text = SharedPref.getValue(resources.getString(R.string.pref_user_division))
         text_cek_location.clicked {
             if (context?.isLocationEnabled() == true) {
                 getLocation { latitude, longitude ->

@@ -58,6 +58,9 @@ class AbsentOfficeFragment : Fragment() {
     }
 
     private fun initView() {
+        text_username.text = SharedPref.getValue(resources.getString(R.string.pref_user_name))
+        text_division.text = SharedPref.getValue(resources.getString(R.string.pref_user_division))
+        text_nik.text = SharedPref.getValue(resources.getString(R.string.pref_user_nik))
         img_preview.clicked {
             withPermission(Manifest.permission.CAMERA) {
                 if (it) {
