@@ -27,6 +27,9 @@ android {
         resValue "string", "maps_search_url", prop.getProperty("maps.search.url")
         resValue "string", "lat_office_it", prop.getProperty("office.lat.it")
         resValue "string", "long_office_it", prop.getProperty("office.long.it")
+
+        resValue "string", "lat_cemara", prop.getProperty("cemara.lat")
+        resValue "string", "long_cemara", prop.getProperty("cemara.long")
     }
 
     buildTypes {

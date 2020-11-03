@@ -1,6 +1,5 @@
 package com.absensi.langitpay.network
 
-import com.absensi.langitpay.BuildConfig
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -20,11 +19,7 @@ object Network {
          * @NONE nothing
          * */
         val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor.Level.BODY
-        } else {
-            HttpLoggingInterceptor.Level.NONE
-        }
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return loggingInterceptor
     }
 

@@ -16,8 +16,8 @@ class NotificationViewModel : ViewModel() {
     private val composite = CompositeDisposable()
     private val dataNotification : MutableLiveData<Notification> = MutableLiveData()
 
-    fun getNotification(): LiveData<Notification> {
-        composite += Network.getRoutes(BaseUrl.BASE_URL).getNotification()
+    fun getNotification(userId : String?): LiveData<Notification> {
+        composite += Network.getRoutes(BaseUrl.BASE_URL).getNotification(userId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

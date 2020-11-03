@@ -15,7 +15,7 @@ interface Routes {
         @Field("username") username: String? = null,
         @Field("password") password: String? = null,
         @Field("device_uniq") deviceUniq: String? = null,
-        @Field("token") token : String? = null
+        @Field("token") token: String? = null
     ): Observable<User>
 
     @GET("/v1/revgeocode")
@@ -27,39 +27,42 @@ interface Routes {
     @GET("autosuggest")
     fun getLocationSearch(
         @Query("at") lat: String,
-        @Query("q") placeName : String,
+        @Query("q") placeName: String,
         @Query("apikey") apiKey: String
-    ) : Observable<SearchLocation>
+    ): Observable<SearchLocation>
 
     @FormUrlEncoded
     @POST("request-update-token")
     fun updateToken(
         @Field("token") token: String,
         @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsentLangitPayAplication.getApplicationContext())
-    ) : Observable<User>
+    ): Observable<User>
 
 
+    @FormUrlEncoded
     @POST("get-notification")
-    fun getNotification() : Observable<Notification>
+    fun getNotification(
+        @Field("user_id", encoded = true) userId: String? = null
+    ): Observable<Notification>
 
     @FormUrlEncoded
     @POST("get-user")
     fun getUser(
         @Field("device_uniq") deviceUniq: String = getDeviceUniqueId(AbsentLangitPayAplication.getApplicationContext())
-    ) : Observable<User>
+    ): Observable<User>
 
     @Multipart
     @POST("request-absen")
     fun requestAbsent(
-        @Part("user_id") userId : RequestBody? = null,
-        @Part("name") name : RequestBody? = null,
-        @Part("type_absensi") typeAbsent : RequestBody? = null,
-        @Part image : MultipartBody.Part? = null,
-        @Part("address") address : RequestBody? = null,
-        @Part("latitude") latitude : RequestBody? = null,
-        @Part("longitude") longitude : RequestBody? = null,
-        @Part("division") division : RequestBody? = null,
-        @Part("noted") noted : RequestBody? = null,
+        @Part("user_id") userId: RequestBody? = null,
+        @Part("name") name: RequestBody? = null,
+        @Part("type_absensi") typeAbsent: RequestBody? = null,
+        @Part image: MultipartBody.Part? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part("latitude") latitude: RequestBody? = null,
+        @Part("longitude") longitude: RequestBody? = null,
+        @Part("division") division: RequestBody? = null,
+        @Part("noted") noted: RequestBody? = null,
         @Part("device_uniq") deviceUniq: RequestBody? = null
-    ) : Observable<RequestAbsent>
+    ): Observable<RequestAbsent>
 }

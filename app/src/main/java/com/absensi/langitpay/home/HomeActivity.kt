@@ -89,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
         SharedPref.saveValue(resources.getString(R.string.pref_user_email),data?.email)
         SharedPref.saveValue(resources.getString(R.string.pref_user_nik),data?.nik.toString())
         SharedPref.saveValue(resources.getString(R.string.pref_user_gender),data?.gender)
-        SharedPref.saveValue(resources.getString(R.string.pref_user_id),data?.id.toString())
+        SharedPref.saveValue(resources.getString(R.string.pref_id_user),data?.id.toString())
         SharedPref.saveValue(resources.getString(R.string.pref_user_password),data?.password)
     }
 

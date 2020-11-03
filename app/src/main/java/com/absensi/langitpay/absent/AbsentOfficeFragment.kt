@@ -2,11 +2,8 @@ package com.absensi.langitpay.absent
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -81,13 +78,16 @@ class AbsentOfficeFragment : Fragment() {
                         this.longitude = longitude ?: 0.0
                     }
                     val locationOffice = Location("").apply {
-                        this.latitude = resources.getString(R.string.lat_office_it).toDouble()
-                        this.longitude = resources.getString(R.string.long_office_it).toDouble()
+                        this.latitude = resources.getString(R.string.lat_cemara).toDouble()
+                        this.longitude = resources.getString(R.string.long_cemara).toDouble()
                     }
                     if (!getLocationDistance(locationMe, locationOffice)) {
                         isValid[1] = latitude.toString()
                         isValid[2] = longitude.toString()
                         validateButton()
+                        context?.showDialogInfo("Berhasil, Lokasi sudah sesuai",buttonText = "Absen Sekarang",dialogResult = {
+                            btn_absen.performClick()
+                        })
                     } else {
                         context?.showDialogInfo(
                             "Lokasi Kurang Akurat")
@@ -162,7 +162,7 @@ class AbsentOfficeFragment : Fragment() {
     private fun requestAbsent() {
         loader?.show()
         viewModel.requestAbsentOffice(
-            userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
+            userId = SharedPref.getValue(resources.getString(R.string.pref_id_user)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
             typeAbsent = "1",
             image = isValid[0],

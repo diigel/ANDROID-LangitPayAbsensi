@@ -45,12 +45,15 @@ class LoginActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.toString() }
             .subscribe({ username ->
-                if (username.length in 1..3) {
-                    isValidArray[0] = ""
-                    username_text_alert.error = "Username harus lebih dari 4 karakter"
-                } else {
-                    isValidArray[0] = username
-                    username_text_alert.error = null
+                when  {
+                    username.length in 1..3 -> {
+                        isValidArray[0] = ""
+                        username_text_alert.error = "Username harus lebih dari 4 karakter"
+                    }
+                    username.length >= 4 -> {
+                        isValidArray[0] = username
+                        username_text_alert.error = null
+                    }
                 }
                 checkEnableButtonNext()
             }, {
@@ -62,12 +65,15 @@ class LoginActivity : AppCompatActivity() {
             .map { it.toString() }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ password ->
-                if (password.length in 1..3) {
-                    isValidArray[1] = ""
-                    password_text_alert.error = "Password harus lebih dari 4 karakter"
-                } else {
-                    isValidArray[1] = password
-                    password_text_alert.error = null
+                when  {
+                    password.length in 1..5 -> {
+                        isValidArray[1] = ""
+                        password_text_alert.error = "Password harus lebih dari 6 karakter"
+                    }
+                    password.length >= 6 -> {
+                        isValidArray[1] = password
+                        password_text_alert.error = null
+                    }
                 }
                 checkEnableButtonNext()
             }, {
@@ -86,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                     loader.dismiss()
                     if (login.status) {
                         requestSavePref(token,login)
+                        logi("data login is ->${login.data}")
                         intentTo(HomeActivity::class.java)
                     } else {
                         showDialogInfo(login.message)
@@ -114,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
             login.data?.password
         )
         SharedPref.saveValue(
-            resources.getString(R.string.pref_user_id),
+            resources.getString(R.string.pref_id_user),
             login.data?.id.toString()
         )
         SharedPref.saveValue(

@@ -27,6 +27,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.*
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.btn_absen
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.img_preview
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.lin_image_camera
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.text_cek_location
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.text_division
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.text_nik
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.text_office_location
+import kotlinx.android.synthetic.main.fragment_absen_outside_the_office.text_username
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 
 /**
@@ -111,11 +119,14 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                         this.longitude = longitude ?: 0.0
                     }
                     val locationOffice = Location("").apply {
-                        this.latitude = resources.getString(R.string.lat_office_it).toDouble()
-                        this.longitude = resources.getString(R.string.long_office_it).toDouble()
+                        this.latitude = isValid[1].toDouble()
+                        this.longitude = isValid[2].toDouble()
                     }
                     if (!getLocationDistance(locationMe, locationOffice)) {
-                        requestAbsent()
+
+                        context?.showDialogInfo("Berhasil, Lokasi sudah sesuai",buttonText = "Absen Sekarang",dialogResult = {
+                            requestAbsent()
+                        })
                     } else {
                         context?.showDialogInfo(
                             "Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
@@ -199,9 +210,9 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
     private fun requestAbsent() {
         loader?.show()
         viewModel.requestAbsentOffice(
-            userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
+            userId = SharedPref.getValue(resources.getString(R.string.pref_id_user)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
-            typeAbsent = "1",
+            typeAbsent = "2",
             image = isValid[0],
             address = isValid[4],
             latitude = isValid[1],
