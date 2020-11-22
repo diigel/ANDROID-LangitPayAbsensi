@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.GsonBuilder
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -313,6 +314,17 @@ fun String.apiToMonthDay(): String? {
     return stringDateFormat.format(origin?:"")
 }
 
+fun String.getApiDateFormat() : String {
+    val fixStringDate = this.take(20).replace("T", " ")
+   // logi("string date -> $fixStringDate")
+
+    val sdfOrigin = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val dateParsing = SimpleDateFormat("dd/MM", Locale.getDefault())
+    dateParsing.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+    val origin =  sdfOrigin.parse(fixStringDate)
+    return sdfOrigin.format(origin?:"")
+}
+
 private fun String.getDate(): Date? {
     val sdfOrigin = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     return sdfOrigin.parse(replace("T", " "))
@@ -329,6 +341,12 @@ fun Context.isLocationEnabled(): Boolean {
     val locationManager =
         this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+}
+fun Any.toJson(): String {
+    val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .create()
+    return gson.toJson(this)
 }
 
 

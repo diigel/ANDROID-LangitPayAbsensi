@@ -65,4 +65,7 @@ interface Routes {
         @Part("noted") noted: RequestBody? = null,
         @Part("device_uniq") deviceUniq: RequestBody? = null
     ): Observable<RequestAbsent>
+
+    @POST("get-OfficeLocation")
+    fun getOfficeLocation() : Observable<GetOfficeLocation>
 }

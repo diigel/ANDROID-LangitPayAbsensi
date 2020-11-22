@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.absensi.langitpay.abstraction.getDeviceUniqueId
+import com.absensi.langitpay.abstraction.logi
+import com.absensi.langitpay.abstraction.toJson
 import com.absensi.langitpay.network.AbsentLangitPayAplication
 import com.absensi.langitpay.network.BaseUrl
 import com.absensi.langitpay.network.Network
+import com.absensi.langitpay.network.response.GetOfficeLocation
 import com.absensi.langitpay.network.response.RequestAbsent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,6 +27,7 @@ class AbsentViewModel : ViewModel() {
 
     private val composite = CompositeDisposable()
     private val dataRequestAbsent: MutableLiveData<RequestAbsent> = MutableLiveData()
+    private val getOfficeLocation: MutableLiveData<GetOfficeLocation> = MutableLiveData()
 
     fun requestAbsentOffice(
         userId: String?,
@@ -63,5 +67,19 @@ class AbsentViewModel : ViewModel() {
 
 
         return dataRequestAbsent
+    }
+
+    fun getOfficeLocation() : LiveData<GetOfficeLocation> {
+
+        composite += Network.getRoutes(BaseUrl.BASE_URL).getOfficeLocation()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                logi("offie location is -> ${it?.toJson()}")
+                getOfficeLocation.postValue(it)
+            },{
+                it.printStackTrace()
+            })
+        return getOfficeLocation
     }
 }

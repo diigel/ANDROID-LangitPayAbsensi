@@ -196,18 +196,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-            <TextView
-                android:id="@+id/text_office_location"
+            <Spinner
+                android:id="@+id/spinner_office_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:drawablePadding="10dp"
-                android:gravity="end|center_vertical"
-                android:text="Kantor"
-                android:textColor="@color/text_color2"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:drawableEndCompat="@drawable/ic_marker"
+                android:spinnerMode="dropdown"
+                android:textAlignment="textEnd"
+                app:layout_constraintBottom_toBottomOf="@+id/text_label_location"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/text_label_location" />
@@ -220,7 +216,7 @@
                 android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_office_location" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_office_location" />
 
             <TextView
                 android:id="@+id/text_cek_location"

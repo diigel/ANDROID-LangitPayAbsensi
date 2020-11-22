@@ -7,7 +7,7 @@ data class Notification(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: List<DataNotification>? = null,
+    val data : MutableList<DataNotification>? = null,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

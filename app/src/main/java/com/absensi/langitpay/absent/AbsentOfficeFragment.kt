@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +18,7 @@ import com.absensi.langitpay.R
 import com.absensi.langitpay.absent.camera.CameraActivity
 import com.absensi.langitpay.abstraction.*
 import com.absensi.langitpay.network.SharedPref
+import com.absensi.langitpay.network.response.DataGetOfficeLocation
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,10 +37,17 @@ class AbsentOfficeFragment : Fragment() {
     private val composite = CompositeDisposable()
     private val viewModel: AbsentViewModel by viewModels()
 
-    private val isValid = mutableListOf("", "", "")
+    private val isValid = mutableListOf("", "", "", "")
 
     private val loader by lazy {
         context?.loaderDialog()
+    }
+
+    private val spinnerAdapter by lazy {
+        ArrayAdapter<DataGetOfficeLocation>(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item
+        )
     }
 
     override fun onCreateView(
@@ -52,6 +62,7 @@ class AbsentOfficeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         validateButton()
+        setupSpinner()
     }
 
     private fun initView() {
@@ -78,19 +89,23 @@ class AbsentOfficeFragment : Fragment() {
                         this.longitude = longitude ?: 0.0
                     }
                     val locationOffice = Location("").apply {
-                        this.latitude = resources.getString(R.string.lat_cemara).toDouble()
-                        this.longitude = resources.getString(R.string.long_cemara).toDouble()
+                        this.latitude = isValid[1].toDouble()
+                        this.longitude = isValid[2].toDouble()
                     }
                     if (!getLocationDistance(locationMe, locationOffice)) {
                         isValid[1] = latitude.toString()
                         isValid[2] = longitude.toString()
                         validateButton()
-                        context?.showDialogInfo("Berhasil, Lokasi sudah sesuai",buttonText = "Absen Sekarang",dialogResult = {
-                            btn_absen.performClick()
-                        })
+                        context?.showDialogInfo(
+                            "Berhasil, Lokasi sudah sesuai",
+                            buttonText = "Absen Sekarang",
+                            dialogResult = {
+                                btn_absen.performClick()
+                            })
                     } else {
                         context?.showDialogInfo(
-                            "Lokasi Kurang Akurat")
+                            "Lokasi Kurang Akurat"
+                        )
                     }
                     loader?.dismiss()
                 }
@@ -166,7 +181,7 @@ class AbsentOfficeFragment : Fragment() {
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
             typeAbsent = "1",
             image = isValid[0],
-            address = "Kantor",
+            address = isValid[3],
             latitude = isValid[1],
             longitude = isValid[2],
             division = SharedPref.getValue(resources.getString(R.string.pref_user_division)),
@@ -184,6 +199,50 @@ class AbsentOfficeFragment : Fragment() {
                 context?.showDialogInfo(it.message)
             }
         })
+    }
+
+    private fun setupSpinner() {
+        viewModel.getOfficeLocation().observe(viewLifecycleOwner, Observer {
+            val data = it.data
+            if (data != null) {
+                spinnerAdapter.apply {
+                    clear()
+                    add(DataGetOfficeLocation(0, "", "", "", "Pilih Kantor"))
+                    addAll(data)
+                    notifyDataSetChanged()
+                }
+            }
+
+            logi("data is -> ${it?.toJson()}")
+        })
+
+        spinner_office_location.adapter = spinnerAdapter
+        spinner_office_location.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val itemFound = spinnerAdapter.getItem(position)
+                itemFound.let {
+                    if (position > 0) {
+                        isValid[1] = itemFound?.lat.toString()
+                        isValid[2] = itemFound?.long.toString()
+                        isValid[3] = "${itemFound?.officeName}, ${itemFound?.address}"
+                    }else{
+                        isValid[1] = ""
+                        isValid[2] = ""
+                        isValid[3] = ""
+                    }
+
+                    validateButton()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
 
     private fun validateButton() {
