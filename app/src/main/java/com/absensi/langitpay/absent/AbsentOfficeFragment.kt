@@ -80,43 +80,47 @@ class AbsentOfficeFragment : Fragment() {
             }
         }
 
-        text_cek_location.clicked {
-            loader?.show()
-            if (context?.isLocationEnabled() == true) {
-                getLocation { latitude, longitude ->
-                    val locationMe = Location("").apply {
-                        this.latitude = latitude ?: 0.0
-                        this.longitude = longitude ?: 0.0
-                    }
-                    val locationOffice = Location("").apply {
-                        this.latitude = isValid[1].toDouble()
-                        this.longitude = isValid[2].toDouble()
-                    }
-                    if (!getLocationDistance(locationMe, locationOffice)) {
-                        isValid[1] = latitude.toString()
-                        isValid[2] = longitude.toString()
-                        validateButton()
-                        context?.showDialogInfo(
-                            "Berhasil, Lokasi sudah sesuai",
-                            buttonText = "Absen Sekarang",
-                            dialogResult = {
-                                btn_absen.performClick()
-                            })
-                    } else {
-                        context?.showDialogInfo(
-                            "Lokasi Kurang Akurat"
-                        )
-                    }
-                    loader?.dismiss()
-                }
-            } else {
-                loader?.dismiss()
-                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }
-        }
-
         btn_absen.clicked {
-            requestAbsent()
+            loader?.show()
+            when {
+                spinner_office_location.selectedItemPosition == 0 -> {
+                    loader?.dismiss()
+                    context?.showDialogInfo("Silahkan pilih lokasi kantor")
+                }
+                context?.isLocationEnabled() == false -> {
+                    loader?.dismiss()
+                    startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                else -> {
+                    getLocation { latitude, longitude ->
+                        val locationMe = Location("").apply {
+                            this.latitude = latitude ?: 0.0
+                            this.longitude = longitude ?: 0.0
+                        }
+                        val locationOffice = Location("").apply {
+                            this.latitude = isValid[1].toDouble()
+                            this.longitude = isValid[2].toDouble()
+                        }
+                        if (!getLocationDistance(locationMe, locationOffice)) {
+                            isValid[1] = latitude.toString()
+                            isValid[2] = longitude.toString()
+                            validateButton()
+                            context?.showDialogInfo(
+                                "Berhasil, Lokasi sudah sesuai",
+                                buttonText = "Absen Sekarang",
+                                dialogResult = {
+                                    requestAbsent()
+                                })
+                        } else {
+                            context?.showDialogInfo(
+                                "Lokasi Kurang Akurat"
+                            )
+                        }
+                        loader?.dismiss()
+                    }
+                }
+            }
+
         }
     }
 
@@ -128,7 +132,7 @@ class AbsentOfficeFragment : Fragment() {
                     lin_image_camera.gone()
                     Glide.with(this).load(imageBitmap).into(img_preview)
                     isValid[0] = image
-                    text_cek_location.visible(true)
+                    //text_cek_location.visible(true)
                 }
             } else {
                 context?.showDialogInfo("Gagal Mengambil Image")
