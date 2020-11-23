@@ -181,7 +181,7 @@ class AbsentOfficeFragment : Fragment() {
     private fun requestAbsent() {
         loader?.show()
         viewModel.requestAbsentOffice(
-            userId = SharedPref.getValue(resources.getString(R.string.pref_id_user)),
+            userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
             typeAbsent = "1",
             image = isValid[0],

@@ -279,7 +279,7 @@ class MarkLocationActivity : AppCompatActivity() {
         adapter.updateNetworkState(NetworkState.LOADING)
         repository.getSearchLocation(at, searchKey, resources.getString(R.string.maps_key)) {
             adapter.updateNetworkState(NetworkState.LOADED)
-            if (it != null) {
+            if (it?.results?.isEmpty() == true) {
                 runOnUiThread {
                     result.invoke(it.results)
                 }

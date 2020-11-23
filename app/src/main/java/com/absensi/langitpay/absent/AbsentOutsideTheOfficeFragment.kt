@@ -123,10 +123,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                         this.longitude = isValid[2].toDouble()
                     }
                     if (!getLocationDistance(locationMe, locationOffice)) {
-
-                        context?.showDialogInfo("Berhasil, Lokasi sudah sesuai",buttonText = "Absen Sekarang",dialogResult = {
-                            requestAbsent()
-                        })
+                        requestAbsent()
                     } else {
                         context?.showDialogInfo(
                             "Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
@@ -210,7 +207,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
     private fun requestAbsent() {
         loader?.show()
         viewModel.requestAbsentOffice(
-            userId = SharedPref.getValue(resources.getString(R.string.pref_id_user)),
+            userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
             typeAbsent = "2",
             image = isValid[0],

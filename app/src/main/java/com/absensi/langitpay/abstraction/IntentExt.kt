@@ -101,7 +101,7 @@ fun View.intentTo(c: String, extIntent: (Intent.() -> Unit)? = null) {
 }
 
 fun Activity.onBack() {
-    onBackPressed()
+   finish()
     overridePendingTransition(
         R.anim.left_in,
         R.anim.right_out

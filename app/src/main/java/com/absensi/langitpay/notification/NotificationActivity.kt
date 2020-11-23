@@ -43,7 +43,7 @@ class NotificationActivity : AppCompatActivity() {
         rv_notification.adapter = adapter
 
         adapter.updateNetworkState(NetworkState.LOADING)
-        viewModel.getNotification(SharedPref.getValue(resources.getString(R.string.pref_id_user)))
+        viewModel.getNotification(SharedPref.getValue(resources.getString(R.string.pref_user_id)))
             .observe(this, Observer {
                 adapter.updateNetworkState(NetworkState.LOADED)
                 if (it.data != null) {

@@ -121,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
             login.data?.password
         )
         SharedPref.saveValue(
-            resources.getString(R.string.pref_id_user),
+            resources.getString(R.string.pref_user_id),
             login.data?.id.toString()
         )
         SharedPref.saveValue(

@@ -10,10 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.absensi.langitpay.R
 import com.absensi.langitpay.absent.ConfirmationAbsenActivity
-import com.absensi.langitpay.abstraction.clicked
-import com.absensi.langitpay.abstraction.intentTo
-import com.absensi.langitpay.abstraction.loaderDialog
-import com.absensi.langitpay.abstraction.showDialogInfo
+import com.absensi.langitpay.abstraction.*
 import com.absensi.langitpay.network.SharedPref
 import com.absensi.langitpay.network.response.DataUser
 import com.absensi.langitpay.notification.NotificationActivity
@@ -40,6 +37,9 @@ class HomeActivity : AppCompatActivity() {
         btn_absen.clicked {
             intentTo(ConfirmationAbsenActivity::class.java)
         }
+
+
+        logi("all shared pref is -> ${SharedPref.getAllValueSharedPref().toJson()}")
     }
 
     private fun createNotificationChannel() {
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userHandle (){
-        if (SharedPref.getPrefDeviceUniqId().isNullOrEmpty()){
+        if (SharedPref.getPrefDeviceUniqId().isNullOrEmpty() || SharedPref.getAllValueSharedPref().isEmpty()){
             loader.dismiss()
             viewModel.getUser().observe(this, Observer {data ->
                 loader.dismiss()
@@ -89,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
         SharedPref.saveValue(resources.getString(R.string.pref_user_email),data?.email)
         SharedPref.saveValue(resources.getString(R.string.pref_user_nik),data?.nik.toString())
         SharedPref.saveValue(resources.getString(R.string.pref_user_gender),data?.gender)
-        SharedPref.saveValue(resources.getString(R.string.pref_id_user),data?.id.toString())
+        SharedPref.saveValue(resources.getString(R.string.pref_user_id),data?.id.toString())
         SharedPref.saveValue(resources.getString(R.string.pref_user_password),data?.password)
     }
 
