@@ -8,7 +8,7 @@
     </base-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">http://85e311af23dd.ngrok.io</domain>
+        <domain includeSubdomains="true">http://dev.langitpayment.com/digel/LangitPayAbsensi/public/</domain>
         <domain includeSubdomains="true">http://localhost:80 </domain>
     </domain-config>
 </network-security-config>
