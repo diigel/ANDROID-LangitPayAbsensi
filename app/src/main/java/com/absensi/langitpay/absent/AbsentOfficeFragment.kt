@@ -105,12 +105,7 @@ class AbsentOfficeFragment : Fragment() {
                             isValid[1] = latitude.toString()
                             isValid[2] = longitude.toString()
                             validateButton()
-                            context?.showDialogInfo(
-                                "Berhasil, Lokasi sudah sesuai",
-                                buttonText = "Absen Sekarang",
-                                dialogResult = {
-                                    requestAbsent()
-                                })
+                            requestAbsent()
                         } else {
                             context?.showDialogInfo(
                                 "Lokasi Kurang Akurat"
@@ -220,6 +215,7 @@ class AbsentOfficeFragment : Fragment() {
             logi("data is -> ${it?.toJson()}")
         })
 
+        //spinner_office_location.isEnabled = isValid[0].isNotEmpty()
         spinner_office_location.adapter = spinnerAdapter
         spinner_office_location.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
