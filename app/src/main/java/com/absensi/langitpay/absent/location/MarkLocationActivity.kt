@@ -10,6 +10,7 @@ import android.os.Parcelable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -154,8 +155,6 @@ class MarkLocationActivity : AppCompatActivity() {
                     val newPosition = maps.cameraPosition.target
                     logi("key is =-----> $key")
                     if (!key.isNullOrEmpty()) {
-                        icon_marker.gone()
-                        icon_marker_shadow.gone()
                         getSearchLocation(newPosition, key) { item ->
                             setupListAddress(maps, item, key)
                         }
@@ -172,11 +171,13 @@ class MarkLocationActivity : AppCompatActivity() {
             it.title.toLowerCase(Locale.getDefault()).contains(key)
         }
         adapter.updateList(filterList)
-        rv_address.visible(true)
+        rv_address.isVisible = true
+        icon_marker.isVisible = false
+        icon_marker_shadow.isVisible = false
         toolbar.setBackgroundColor(Color.WHITE)
 
         adapter.itemClick { item ->
-            rv_address.gone(true)
+            rv_address.isVisible = false
             hideKeyboard()
 
             when (bottomSheet.state) {
@@ -279,7 +280,7 @@ class MarkLocationActivity : AppCompatActivity() {
         adapter.updateNetworkState(NetworkState.LOADING)
         repository.getSearchLocation(at, searchKey, resources.getString(R.string.maps_key)) {
             adapter.updateNetworkState(NetworkState.LOADED)
-            if (it?.results?.isEmpty() == true) {
+            if (it?.results?.isNotEmpty() == true) {
                 runOnUiThread {
                     result.invoke(it.results)
                 }

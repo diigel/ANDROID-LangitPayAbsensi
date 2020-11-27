@@ -1,11 +1,7 @@
 package com.absensi.langitpay.notification
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.absensi.langitpay.R
@@ -35,12 +31,10 @@ class FirebaseMessaging : FirebaseMessagingService() {
         val builder = NotificationCompat.Builder(this, "LP-ABSENSI")
             .setSmallIcon(R.drawable.ic_langitpay_absensi)
             .setContentTitle(title)
-            .setContentText("$status \n $message")
             .setAutoCancel(true)
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText(message)
-            )
+            .setStyle(NotificationCompat.InboxStyle()
+                    .addLine(status)
+                    .addLine(message))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val intent = Intent(this, NotificationActivity::class.java).apply {
@@ -59,7 +53,7 @@ class FirebaseMessaging : FirebaseMessagingService() {
         }
     }
 
-    fun getRandomId(): Int {
+    private fun getRandomId(): Int {
         return System.currentTimeMillis().toString().takeLast(4).toInt()
     }
 

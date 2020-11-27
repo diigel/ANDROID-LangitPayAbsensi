@@ -79,6 +79,7 @@ class AbsentOfficeFragment : Fragment() {
                 }
             }
         }
+        spinner_office_location.isEnabled = false
 
         btn_absen.clicked {
             loader?.show()
@@ -107,11 +108,12 @@ class AbsentOfficeFragment : Fragment() {
                             validateButton()
                             requestAbsent()
                         } else {
+                            loader?.dismiss()
                             context?.showDialogInfo(
                                 "Lokasi Kurang Akurat"
                             )
                         }
-                        loader?.dismiss()
+
                     }
                 }
             }
@@ -127,7 +129,7 @@ class AbsentOfficeFragment : Fragment() {
                     lin_image_camera.gone()
                     Glide.with(this).load(imageBitmap).into(img_preview)
                     isValid[0] = image
-                    //text_cek_location.visible(true)
+                    spinner_office_location.isEnabled = true
                 }
             } else {
                 context?.showDialogInfo("Gagal Mengambil Image")
@@ -174,7 +176,6 @@ class AbsentOfficeFragment : Fragment() {
     }
 
     private fun requestAbsent() {
-        loader?.show()
         viewModel.requestAbsentOffice(
             userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
@@ -215,7 +216,6 @@ class AbsentOfficeFragment : Fragment() {
             logi("data is -> ${it?.toJson()}")
         })
 
-        //spinner_office_location.isEnabled = isValid[0].isNotEmpty()
         spinner_office_location.adapter = spinnerAdapter
         spinner_office_location.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

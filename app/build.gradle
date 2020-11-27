@@ -26,11 +26,6 @@ android {
         resValue "string", "maps_url", prop.getProperty("maps.url")
         resValue "string", "maps_app_id", prop.getProperty("maps.app.id")
         resValue "string", "maps_search_url", prop.getProperty("maps.search.url")
-//        resValue "string", "lat_office_it", prop.getProperty("office.lat.it")
-//        resValue "string", "long_office_it", prop.getProperty("office.long.it")
-//
-//        resValue "string", "lat_cemara", prop.getProperty("cemara.lat")
-//        resValue "string", "long_cemara", prop.getProperty("cemara.long")
     }
 
     buildTypes {
@@ -67,7 +62,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -96,7 +91,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.6'
     implementation 'pl.charmas.android:android-reactive-location2:2.1@aar'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
@@ -113,8 +108,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
 
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
 
     api 'com.afollestad.material-dialogs:core:3.3.0'
     api 'com.afollestad.material-dialogs:datetime:3.3.0'

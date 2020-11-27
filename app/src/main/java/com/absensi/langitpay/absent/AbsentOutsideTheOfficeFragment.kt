@@ -72,8 +72,10 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
         text_nik.text = SharedPref.getValue(resources.getString(R.string.pref_user_nik))
         text_division.text = SharedPref.getValue(resources.getString(R.string.pref_user_division))
         text_cek_location.clicked {
+            loader?.show()
             if (context?.isLocationEnabled() == true) {
                 getLocation { latitude, longitude ->
+                    loader?.dismiss()
                     val latLong = LatLng(latitude ?: 0.0, longitude ?: 0.0)
                     startActivityForResult(
                         Intent(requireContext(), MarkLocationActivity::class.java)
@@ -81,6 +83,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                     )
                 }
             } else {
+                loader?.dismiss()
                 startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             }
         }
@@ -114,6 +117,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
         btn_absen.clicked {
             if (context?.isLocationEnabled() == true) {
                 getLocation { latitude, longitude ->
+                    loader?.show()
                     val locationMe = Location("").apply {
                         this.latitude = latitude ?: 0.0
                         this.longitude = longitude ?: 0.0
@@ -125,6 +129,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                     if (!getLocationDistance(locationMe, locationOffice)) {
                         requestAbsent()
                     } else {
+                        loader?.dismiss()
                         context?.showDialogInfo(
                             "Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
                     }
@@ -205,7 +210,6 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
     }
 
     private fun requestAbsent() {
-        loader?.show()
         viewModel.requestAbsentOffice(
             userId = SharedPref.getValue(resources.getString(R.string.pref_user_id)),
             name = SharedPref.getValue(resources.getString(R.string.pref_user_name)),
