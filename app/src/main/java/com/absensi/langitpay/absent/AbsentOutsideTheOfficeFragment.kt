@@ -130,8 +130,7 @@ class AbsentOutsideTheOfficeFragment : Fragment() {
                         requestAbsent()
                     } else {
                         loader?.dismiss()
-                        context?.showDialogInfo(
-                            "Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
+                        context?.showDialogInfo("Lokasi Tidak Akurat, Silahkan anda pindah ke sekitaran lokasi yang anda tentukan")
                     }
                 }
             }else{
