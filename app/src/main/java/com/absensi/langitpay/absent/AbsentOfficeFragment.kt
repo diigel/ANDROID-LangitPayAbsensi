@@ -168,7 +168,7 @@ class AbsentOfficeFragment : Fragment() {
     }
 
     private fun getLocationDistance(locationMe: Location, locationOffice: Location): Boolean {
-        val inMeters = 50f
+        val inMeters = 300f
         val distance = locationOffice.distanceTo(locationMe)
         logi("distance is -> $distance \n inMeter is -> $inMeters")
         logi("loc me is -> $locationMe \n loc office is -> $locationOffice")
